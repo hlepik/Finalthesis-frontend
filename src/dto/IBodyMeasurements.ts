@@ -1,0 +1,29 @@
+export interface IBodyMeasurements {
+  id?: string;
+  neckSize: number;
+  chestGirth: number;
+  waistGirth: number;
+  upperHipGirth: number;
+  waistLengthFirst: number;
+  hipGirth: number;
+  waistLengthSec: number;
+  upperArmGirth: number;
+  wristGirth: number;
+  frontLength: number;
+  thighGirth: number;
+  kneeGirth: number;
+  calfGirth: number;
+  ankleGirth: number;
+  insideLegLength: number;
+  armLength: number;
+  shoulderLength: number;
+  armholeLength: number;
+  backWidth: number;
+  waistHeight: number;
+  backLength: number;
+  chestHeight: number;
+  buttockHeight: number;
+  length: number;
+  unitId: string;
+  appUserId: string;
+}

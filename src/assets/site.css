@@ -1,0 +1,236 @@
+
+#header {
+    height: 5rem;
+    background-color: #23494D;
+}
+
+#footer {
+    height: 10rem;
+    background-color: #759497;
+}
+
+.LoginBox {
+    max-width: 55%;
+    padding: 4rem;
+    box-shadow: 0 6px 20px 0 var(--box-shadow-color);
+    color: #23494D;
+    --box-shadow-color: #4C2754;
+
+}
+
+.LoginContainer {
+    display: flex;
+    justify-content: center;
+}
+
+.MainContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    background-color: #E5E4E4;
+    margin: auto;
+}
+
+.CardContainer {
+    max-Width: 300px;
+    width: auto;
+    height: 350px;
+    border: 1px solid red;
+    border-bottom-right-radius: 30% 20%;
+    border-top-left-radius: 30% 20%;
+    background-color: white;
+}
+
+.PageContainer {
+    width: 90%;
+    margin: auto;
+    background: white;
+}
+
+.MainPage {
+    background: #E5E4E4;
+}
+
+
+.Image {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border-bottom-right-radius: 30% 20%;
+    border-top-left-radius: 30% 20%;
+    box-shadow: 0 6px 20px 0 var(--box-shadow-color);
+    --box-shadow-color: black;
+
+}
+
+.PictureCard {
+    position: relative;
+    max-width: 300px;
+    width: 100%;
+    height: 350px;
+    background: #E5E4E4;
+
+
+}
+
+.TitleGrid {
+    position: absolute;
+    background: black;
+    bottom: 0;
+    height: 100px;
+    width: 100%;
+    opacity: 70%;
+    border-bottom-right-radius: 30% 70%;
+
+}
+
+.ButtonGrid {
+    justify-content: flex-end;
+    display: flex;
+    margin-top: 2rem;
+}
+
+.HeaderLinks {
+    display: flex;
+    justify-content: flex-end;
+    column-gap: 1.5rem;
+    padding-right: 4rem;
+    font-family: 'Montserrat', serif;
+    font-size: 1.5rem;
+    color: #F7D87B;
+}
+.HeaderLinks a {
+    color: #F7D87B;
+}
+
+.StyledLink {
+    text-decoration: none;
+}
+
+.TableGrid {
+    width: 80%;
+ /*   box-shadow: 0 6px 20px 0 var(--box-shadow-color);
+    --box-shadow-color: black;*/
+    display: flex;
+    padding: 2rem;
+    margin: auto;
+}
+
+.UserData {
+    display: flex;
+    column-gap: 2rem;
+    padding-left: 5rem;
+    padding-top: 1rem;
+}
+.formGrid {
+    width: 20rem;
+    margin:0 2rem;
+}
+.formButton {
+    display: flex;
+    justify-content: end;
+    margin-top: 3rem;
+}
+
+.swiper-button-next, .swiper-button-prev {
+    opacity: 1;
+    transition: 0.5s ease-in-out;
+}
+
+.swiper-button-disabled {
+    visibility: hidden;
+    opacity: 0;
+    transition: 0.5s ease-in-out;
+}
+
+.imageGrid {
+    width: 30rem;
+    height: 29rem;
+}
+#dialogButton {
+    height: 4.5rem;
+    width: 5rem;
+}
+
+img {
+    width: 100%;
+    height: 100%;
+}
+
+.measurementsForm{
+    display: flex;
+    width: 40rem;
+    flex-direction: row;
+
+}
+.InputGrid {
+    width: 10rem;
+    margin: 1rem;
+    row-gap: 1rem;
+}
+
+.InputGrid .MuiGrid-root{
+    width: 16rem;
+    display: flex;
+    margin-bottom: 0.5rem;
+    flex-direction: column;
+    row-gap: 1rem;
+}
+.closeButton {
+    width: 100%;
+    display: flex;
+    margin-top: 1rem;
+    padding-right: 1rem;
+    justify-content: flex-end;
+}
+#dialogButton {
+    width: 3rem;
+    height: 3rem;
+    padding: unset;
+}
+.MuiMobileStepper-root {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.MuiPaper-root-MuiDialog-paper {
+    max-width: none;
+}
+.css-1t1j96h-MuiPaper-root-MuiDialog-paper {
+    max-width: none;
+
+}
+.StyledDialog {
+    width: 100%;
+
+}
+.DialogAlert {
+    margin-bottom: 3rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+.NoPaddingAlert{
+    margin-bottom: 3rem;
+
+}
+.DataTableGrid{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    border: 1px solid red;
+}
+
+.PageContainer {
+    padding: 3rem 2rem;
+}
+
+.AddButton {
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+}
+.columnGrid {
+    display: flex;
+    flex-direction: column;
+}
+
