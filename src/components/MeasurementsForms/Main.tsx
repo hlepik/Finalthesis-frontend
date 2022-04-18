@@ -75,12 +75,12 @@ const Main = () => {
                   InputProps={{ inputProps: { min: 1, step: 0.5 } }}
                   onChange={(e) => {
                     setValue(
-                      "length",
+                      "userData.length",
                       e.target.value.length > 0
                         ? parseFloat(e.target.value)
                         : ""
                     );
-                    clearErrors("length");
+                    clearErrors("userData.length");
                   }}
                   label="Üldpikkus"
                   required
@@ -92,45 +92,47 @@ const Main = () => {
               }}
             />
           </Grid>
-          <Grid item xs={12}>
-            <Controller
-              control={control}
-              name={"userData.unitId"}
-              render={({
-                field: { onChange, value },
-                fieldState: { error },
-              }) => (
-                <FormControl variant="standard" fullWidth error={!!error}>
-                  <InputLabel id="demo-simple-select-standard-label">
-                    Mõõtühik*
-                  </InputLabel>
-                  <Select
-                    labelId="demo-simple-select-standard-label"
-                    id="demo-simple-select-standard"
-                    value={value}
-                    onChange={(e) => {
-                      onChange(e);
-                      clearErrors("unitId");
-                    }}
-                  >
-                    {units.map((unit) => (
-                      <MenuItem key={unit.id} value={unit.id}>
-                        {unit.name}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                  {getFieldState("unitId").invalid && (
-                    <FormHelperText>
-                      {getFieldState("unitId")!.error!.message}
-                    </FormHelperText>
-                  )}
-                </FormControl>
-              )}
-              rules={{
-                required: "Mõõtühiku valimine on kohustuslik.",
-              }}
-            />
-          </Grid>
+          {units.length > 0 ? (
+            <Grid item xs={12}>
+              <Controller
+                control={control}
+                name={"userData.unitId"}
+                render={({
+                  field: { onChange, value },
+                  fieldState: { error },
+                }) => (
+                  <FormControl variant="standard" fullWidth error={!!error}>
+                    <InputLabel id="demo-simple-select-standard-label">
+                      Mõõtühik*
+                    </InputLabel>
+                    <Select
+                      labelId="demo-simple-select-standard-label"
+                      id="demo-simple-select-standard"
+                      value={value === null ? "" : value}
+                      onChange={(e) => {
+                        onChange(e);
+                        clearErrors("userData.unitId");
+                      }}
+                    >
+                      {units.map((unit) => (
+                        <MenuItem key={unit.id} value={unit.id}>
+                          {unit.name}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                    {getFieldState("userData.unitId").invalid && (
+                      <FormHelperText>
+                        {getFieldState("userData.unitId")!.error!.message}
+                      </FormHelperText>
+                    )}
+                  </FormControl>
+                )}
+                rules={{
+                  required: "Mõõtühiku valimine on kohustuslik.",
+                }}
+              />
+            </Grid>
+          ) : null}
         </Grid>
       </Grid>
     </Grid>

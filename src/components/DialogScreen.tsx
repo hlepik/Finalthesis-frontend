@@ -1,5 +1,5 @@
 import { FC, ReactEventHandler, useEffect, useRef, useState } from "react";
-import { Dialog, DialogContent, Grid, styled } from "@mui/material";
+import { Dialog, DialogContent, DialogProps, Grid } from "@mui/material";
 import BasicButton from "./BasicButton";
 import { IBodyMeasurements } from "../dto/IBodyMeasurements";
 
@@ -19,9 +19,6 @@ const DialogScreen: FC<IDialogScreen> = ({
   width,
   fullWidth,
 }) => {
-  const [activeStep, setActiveStep] = useState(0);
-  let stepCount = 0;
-
   const contentRef = useRef<any>(null);
   useEffect(() => {
     if (isOpened) {
@@ -35,8 +32,9 @@ const DialogScreen: FC<IDialogScreen> = ({
     <Dialog
       aria-describedby="scroll-dialog-description"
       aria-labelledby="scroll-dialog-title"
-      open={!!isOpened}
-      maxWidth={false}
+      open={isOpened}
+      fullWidth={fullWidth}
+      maxWidth={fullWidth ? "xl" : "md"}
     >
       <Grid className="StyledDialog">
         <Grid className="closeButton">

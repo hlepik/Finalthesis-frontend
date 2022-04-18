@@ -1,9 +1,9 @@
 import { useCallback, useContext, useEffect, useState } from "react";
 import { AppContext } from "../../context/AppContext";
 import { BaseService } from "../../service/base-service";
-import { IUnit } from "../../dto/IUnit";
 import {
   Grid,
+  styled,
   Table,
   TableBody,
   TableCell,
@@ -21,6 +21,13 @@ import { EDialogType } from "../../types/EDialogType";
 import AlertComponent, { EAlertClass } from "../../components/AlertComponent";
 import { ICategory } from "../../dto/ICategory";
 
+const StyledTable = styled(Table)({
+  width: "auto",
+});
+const StyledBasicButton = styled(BasicButton)({
+  marginLeft: "3rem",
+  marginRight: "1rem",
+});
 const CategoryIndex = () => {
   const appState = useContext(AppContext);
   const [category, setCategory] = useState(([] as ICategory[]) || "");
@@ -31,7 +38,7 @@ const CategoryIndex = () => {
 
   const [modalState, setModalState] = useState(false);
   const { handleSubmit, control, setError, setValue, getValues, reset } =
-    useForm<IUnit>({
+    useForm<ICategory>({
       defaultValues: {
         name: "",
       },
@@ -124,7 +131,7 @@ const CategoryIndex = () => {
   }, [loadData]);
 
   return (
-    <Grid container className={"PageContainer"}>
+    <Grid container className={"layoutContainer"}>
       <Grid>
         <Typography variant="h1">Kategooriad</Typography>
         <Grid className={"AddButton"}>
@@ -210,13 +217,12 @@ const CategoryIndex = () => {
         )}
       </DialogScreen>
       <TableContainer>
-        <Table>
+        <StyledTable>
           <TableHead>
             <TableRow>
               <TableCell>
                 <Typography variant={"h5"}>Nimetus</Typography>
               </TableCell>
-              <TableCell></TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -224,7 +230,7 @@ const CategoryIndex = () => {
               <TableRow key={item.id}>
                 <TableCell>{item.name}</TableCell>
                 <TableCell>
-                  <BasicButton
+                  <StyledBasicButton
                     btnType={"black"}
                     label={"Muuda"}
                     onClick={() => {
@@ -243,7 +249,7 @@ const CategoryIndex = () => {
               </TableRow>
             ))}
           </TableBody>
-        </Table>
+        </StyledTable>
       </TableContainer>
     </Grid>
   );

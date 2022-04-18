@@ -26,4 +26,5 @@ export interface IBodyMeasurements {
   length: number;
   unitId: string;
   appUserId: string;
+  instructionId?: string;
 }

@@ -17,7 +17,7 @@ const Back = () => {
             <Grid item xs={12}>
               <Controller
                 control={control}
-                name="insideLegLength"
+                name="userData.insideLegLength"
                 render={({ field: { value }, fieldState: { error } }) => (
                   <TextField
                     helperText={error ? error.message : null}
@@ -29,12 +29,12 @@ const Back = () => {
                     InputProps={{ inputProps: { min: 1, step: 0.5 } }}
                     onChange={(e) => {
                       setValue(
-                        "insideLegLength",
+                        "userData.insideLegLength",
                         e.target.value.length > 0
                           ? parseFloat(e.target.value)
                           : ""
                       );
-                      clearErrors("insideLegLength");
+                      clearErrors("userData.insideLegLength");
                     }}
                     label="15. Jala pikkus"
                     value={value}
@@ -48,7 +48,7 @@ const Back = () => {
             <Grid item xs={12}>
               <Controller
                 control={control}
-                name="armLength"
+                name="userData.armLength"
                 render={({ field: { value }, fieldState: { error } }) => (
                   <TextField
                     helperText={error ? error.message : null}
@@ -60,12 +60,12 @@ const Back = () => {
                     InputProps={{ inputProps: { min: 1, step: 0.5 } }}
                     onChange={(e) => {
                       setValue(
-                        "armLength",
+                        "userData.armLength",
                         e.target.value.length > 0
                           ? parseFloat(e.target.value)
                           : ""
                       );
-                      clearErrors("armLength");
+                      clearErrors("userData.armLength");
                     }}
                     label="16. Varruka pikkus"
                     value={value}
@@ -79,7 +79,7 @@ const Back = () => {
             <Grid item xs={12}>
               <Controller
                 control={control}
-                name="shoulderLength"
+                name="userData.shoulderLength"
                 render={({ field: { value }, fieldState: { error } }) => (
                   <TextField
                     helperText={error ? error.message : null}
@@ -91,12 +91,12 @@ const Back = () => {
                     InputProps={{ inputProps: { min: 1, step: 0.5 } }}
                     onChange={(e) => {
                       setValue(
-                        "shoulderLength",
+                        "userData.shoulderLength",
                         e.target.value.length > 0
                           ? parseFloat(e.target.value)
                           : ""
                       );
-                      clearErrors("shoulderLength");
+                      clearErrors("userData.shoulderLength");
                     }}
                     label="17. Õla pikkus"
                     value={value}
@@ -110,7 +110,7 @@ const Back = () => {
             <Grid item xs={12}>
               <Controller
                 control={control}
-                name="armholeLength"
+                name="userData.armholeLength"
                 render={({ field: { value }, fieldState: { error } }) => (
                   <TextField
                     error={!!error}
@@ -122,12 +122,12 @@ const Back = () => {
                     InputProps={{ inputProps: { min: 1, step: 0.5 } }}
                     onChange={(e) => {
                       setValue(
-                        "armholeLength",
+                        "userData.armholeLength",
                         e.target.value.length > 0
                           ? parseFloat(e.target.value)
                           : ""
                       );
-                      clearErrors("armholeLength");
+                      clearErrors("userData.armholeLength");
                     }}
                     label="18. Käeaugukaare sügavus"
                     value={value}
@@ -141,7 +141,7 @@ const Back = () => {
             <Grid item xs={12}>
               <Controller
                 control={control}
-                name="backWidth"
+                name="userData.backWidth"
                 render={({ field: { value }, fieldState: { error } }) => (
                   <TextField
                     helperText={error ? error.message : null}
@@ -153,12 +153,12 @@ const Back = () => {
                     InputProps={{ inputProps: { min: 1, step: 0.5 } }}
                     onChange={(e) => {
                       setValue(
-                        "backWidth",
+                        "userData.backWidth",
                         e.target.value.length > 0
                           ? parseFloat(e.target.value)
                           : ""
                       );
-                      clearErrors("backWidth");
+                      clearErrors("userData.backWidth");
                     }}
                     label="19. Seljalaius"
                     value={value}

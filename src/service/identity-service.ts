@@ -22,7 +22,6 @@ export abstract class IdentityService {
         apiEndpoint,
         loginDataJson
       );
-      console.log(response);
       return {
         ok: response.status <= 299,
         statusCode: response.status,

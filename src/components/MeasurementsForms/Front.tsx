@@ -34,7 +34,7 @@ const Front = () => {
                           ? parseFloat(e.target.value)
                           : ""
                       );
-                      clearErrors("neckSize");
+                      clearErrors("userData.neckSize");
                     }}
                     label="1. Kaela ümbermõõt"
                     value={value}
@@ -48,7 +48,7 @@ const Front = () => {
             <Grid item xs={12}>
               <Controller
                 control={control}
-                name="chestGirth"
+                name="userData.chestGirth"
                 render={({ field: { value }, fieldState: { error } }) => (
                   <TextField
                     helperText={error ? error.message : null}
@@ -59,12 +59,12 @@ const Front = () => {
                     fullWidth
                     onChange={(e) => {
                       setValue(
-                        "chestGirth",
+                        "userData.chestGirth",
                         e.target.value.length > 0
                           ? parseFloat(e.target.value)
                           : ""
                       );
-                      clearErrors("chestGirth");
+                      clearErrors("userData.chestGirth");
                     }}
                     label="2. Rinnaümbermõõt"
                     value={value}
@@ -79,7 +79,7 @@ const Front = () => {
             <Grid item xs={12}>
               <Controller
                 control={control}
-                name="waistGirth"
+                name="userData.waistGirth"
                 render={({ field: { value }, fieldState: { error } }) => (
                   <TextField
                     helperText={error ? error.message : null}
@@ -91,12 +91,12 @@ const Front = () => {
                     InputProps={{ inputProps: { min: 1, step: 0.5 } }}
                     onChange={(e) => {
                       setValue(
-                        "waistGirth",
+                        "userData.waistGirth",
                         e.target.value.length > 0
                           ? parseFloat(e.target.value)
                           : ""
                       );
-                      clearErrors("waistGirth");
+                      clearErrors("userData.waistGirth");
                     }}
                     label="3. Vööümbermõõt"
                     value={value}
@@ -110,7 +110,7 @@ const Front = () => {
             <Grid item xs={12}>
               <Controller
                 control={control}
-                name="upperHipGirth"
+                name="userData.upperHipGirth"
                 render={({ field: { value }, fieldState: { error } }) => (
                   <TextField
                     helperText={error ? error.message : null}
@@ -122,12 +122,12 @@ const Front = () => {
                     InputProps={{ inputProps: { min: 1, step: 0.5 } }}
                     onChange={(e) => {
                       setValue(
-                        "upperHipGirth",
+                        "userData.upperHipGirth",
                         e.target.value.length > 0
                           ? parseFloat(e.target.value)
                           : ""
                       );
-                      clearErrors("upperHipGirth");
+                      clearErrors("userData.upperHipGirth");
                     }}
                     label="4. Ülemise puusa ümbermõõt"
                     value={value}
@@ -142,7 +142,7 @@ const Front = () => {
             <Grid item xs={12}>
               <Controller
                 control={control}
-                name="waistLengthFirst"
+                name="userData.waistLengthFirst"
                 render={({ field: { value }, fieldState: { error } }) => (
                   <TextField
                     helperText={error ? error.message : null}
@@ -154,12 +154,12 @@ const Front = () => {
                     InputProps={{ inputProps: { min: 1, step: 0.5 } }}
                     onChange={(e) => {
                       setValue(
-                        "waistLengthFirst",
+                        "userData.waistLengthFirst",
                         e.target.value.length > 0
                           ? parseFloat(e.target.value)
                           : ""
                       );
-                      clearErrors("waistLengthFirst");
+                      clearErrors("userData.waistLengthFirst");
                     }}
                     label="5. Tuharavoldi pikkus"
                     value={value}
@@ -173,7 +173,7 @@ const Front = () => {
             <Grid item xs={12}>
               <Controller
                 control={control}
-                name="hipGirth"
+                name="userData.hipGirth"
                 render={({ field: { value }, fieldState: { error } }) => (
                   <TextField
                     helperText={error ? error.message : null}
@@ -185,12 +185,12 @@ const Front = () => {
                     InputProps={{ inputProps: { min: 1, step: 0.5 } }}
                     onChange={(e) => {
                       setValue(
-                        "hipGirth",
+                        "userData.hipGirth",
                         e.target.value.length > 0
                           ? parseFloat(e.target.value)
                           : ""
                       );
-                      clearErrors("hipGirth");
+                      clearErrors("userData.hipGirth");
                     }}
                     label="6. Puusa ümbermõõt"
                     value={value}
@@ -204,7 +204,7 @@ const Front = () => {
             <Grid item xs={12}>
               <Controller
                 control={control}
-                name="waistLengthSec"
+                name="userData.waistLengthSec"
                 render={({ field: { value }, fieldState: { error } }) => (
                   <TextField
                     helperText={error ? error.message : null}
@@ -216,12 +216,12 @@ const Front = () => {
                     InputProps={{ inputProps: { min: 1, step: 0.5 } }}
                     onChange={(e) => {
                       setValue(
-                        "waistLengthSec",
+                        "userData.waistLengthSec",
                         e.target.value.length > 0
                           ? parseFloat(e.target.value)
                           : ""
                       );
-                      clearErrors("waistLengthSec");
+                      clearErrors("userData.waistLengthSec");
                     }}
                     label="7. Vööjoone kõrgus"
                     value={value}
@@ -237,7 +237,7 @@ const Front = () => {
             <Grid item xs={12}>
               <Controller
                 control={control}
-                name="upperArmGirth"
+                name="userData.upperArmGirth"
                 render={({ field: { value }, fieldState: { error } }) => (
                   <TextField
                     helperText={error ? error.message : null}
@@ -249,12 +249,12 @@ const Front = () => {
                     InputProps={{ inputProps: { min: 1, step: 0.5 } }}
                     onChange={(e) => {
                       setValue(
-                        "upperArmGirth",
+                        "userData.upperArmGirth",
                         e.target.value.length > 0
                           ? parseFloat(e.target.value)
                           : ""
                       );
-                      clearErrors("upperArmGirth");
+                      clearErrors("userData.upperArmGirth");
                     }}
                     label="8. Käe ümbermõõt"
                     value={value}
@@ -268,7 +268,7 @@ const Front = () => {
             <Grid item xs={12}>
               <Controller
                 control={control}
-                name="wristGirth"
+                name="userData.wristGirth"
                 render={({ field: { value }, fieldState: { error } }) => (
                   <TextField
                     helperText={error ? error.message : null}
@@ -280,12 +280,12 @@ const Front = () => {
                     InputProps={{ inputProps: { min: 1, step: 0.5 } }}
                     onChange={(e) => {
                       setValue(
-                        "wristGirth",
+                        "userData.wristGirth",
                         e.target.value.length > 0
                           ? parseFloat(e.target.value)
                           : ""
                       );
-                      clearErrors("wristGirth");
+                      clearErrors("userData.wristGirth");
                     }}
                     label="9. Randme ümbermõõt"
                     value={value}
@@ -299,7 +299,7 @@ const Front = () => {
             <Grid item xs={12}>
               <Controller
                 control={control}
-                name="frontLength"
+                name="userData.frontLength"
                 render={({ field: { value }, fieldState: { error } }) => (
                   <TextField
                     helperText={error ? error.message : null}
@@ -311,12 +311,12 @@ const Front = () => {
                     InputProps={{ inputProps: { min: 1, step: 0.5 } }}
                     onChange={(e) => {
                       setValue(
-                        "frontLength",
+                        "userData.frontLength",
                         e.target.value.length > 0
                           ? parseFloat(e.target.value)
                           : ""
                       );
-                      clearErrors("frontLength");
+                      clearErrors("userData.frontLength");
                     }}
                     label="10. Esipikkus"
                     value={value}
@@ -330,7 +330,7 @@ const Front = () => {
             <Grid item xs={12}>
               <Controller
                 control={control}
-                name="thighGirth"
+                name="userData.thighGirth"
                 render={({ field: { value }, fieldState: { error } }) => (
                   <TextField
                     helperText={error ? error.message : null}
@@ -342,12 +342,12 @@ const Front = () => {
                     InputProps={{ inputProps: { min: 1, step: 0.5 } }}
                     onChange={(e) => {
                       setValue(
-                        "thighGirth",
+                        "userData.thighGirth",
                         e.target.value.length > 0
                           ? parseFloat(e.target.value)
                           : ""
                       );
-                      clearErrors("thighGirth");
+                      clearErrors("userData.thighGirth");
                     }}
                     label="11. Reie ümbermõõt"
                     value={value}
@@ -361,7 +361,7 @@ const Front = () => {
             <Grid item xs={12}>
               <Controller
                 control={control}
-                name="kneeGirth"
+                name="userData.kneeGirth"
                 render={({ field: { value }, fieldState: { error } }) => (
                   <TextField
                     helperText={error ? error.message : null}
@@ -373,12 +373,12 @@ const Front = () => {
                     InputProps={{ inputProps: { min: 1, step: 0.5 } }}
                     onChange={(e) => {
                       setValue(
-                        "kneeGirth",
+                        "userData.kneeGirth",
                         e.target.value.length > 0
                           ? parseFloat(e.target.value)
                           : ""
                       );
-                      clearErrors("kneeGirth");
+                      clearErrors("userData.kneeGirth");
                     }}
                     label="12. Põlve ümbermõõt"
                     value={value}
@@ -392,7 +392,7 @@ const Front = () => {
             <Grid item xs={12}>
               <Controller
                 control={control}
-                name="calfGirth"
+                name="userData.calfGirth"
                 render={({ field: { value }, fieldState: { error } }) => (
                   <TextField
                     helperText={error ? error.message : null}
@@ -404,12 +404,12 @@ const Front = () => {
                     InputProps={{ inputProps: { min: 1, step: 0.5 } }}
                     onChange={(e) => {
                       setValue(
-                        "calfGirth",
+                        "userData.calfGirth",
                         e.target.value.length > 0
                           ? parseFloat(e.target.value)
                           : ""
                       );
-                      clearErrors("calfGirth");
+                      clearErrors("userData.calfGirth");
                     }}
                     label="13. Sääre ümbermõõt"
                     value={value}
@@ -423,7 +423,7 @@ const Front = () => {
             <Grid item xs={12}>
               <Controller
                 control={control}
-                name="ankleGirth"
+                name="userData.ankleGirth"
                 render={({ field: { value }, fieldState: { error } }) => (
                   <TextField
                     helperText={error ? error.message : null}
@@ -435,12 +435,12 @@ const Front = () => {
                     InputProps={{ inputProps: { min: 1, step: 0.5 } }}
                     onChange={(e) => {
                       setValue(
-                        "ankleGirth",
+                        "userData.ankleGirth",
                         e.target.value.length > 0
                           ? parseFloat(e.target.value)
                           : ""
                       );
-                      clearErrors("ankleGirth");
+                      clearErrors("userData.ankleGirth");
                     }}
                     label="14. Pahkluu ümbermõõt"
                     value={value}

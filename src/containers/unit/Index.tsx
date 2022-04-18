@@ -4,6 +4,7 @@ import { BaseService } from "../../service/base-service";
 import { IUnit } from "../../dto/IUnit";
 import {
   Grid,
+  styled,
   Table,
   TableBody,
   TableCell,
@@ -19,7 +20,13 @@ import BasicButton from "../../components/BasicButton";
 import { isBlank } from "../../utils/isBlank";
 import { EDialogType } from "../../types/EDialogType";
 import AlertComponent, { EAlertClass } from "../../components/AlertComponent";
-
+const StyledTable = styled(Table)({
+  width: "auto",
+});
+const StyledBasicButton = styled(BasicButton)({
+  marginLeft: "3rem",
+  marginRight: "1rem",
+});
 const UnitIndex = () => {
   const appState = useContext(AppContext);
   const [units, setUnits] = useState(([] as IUnit[]) || "");
@@ -124,7 +131,7 @@ const UnitIndex = () => {
   }, [loadData]);
 
   return (
-    <Grid container className={"PageContainer"}>
+    <Grid container className={"layoutContainer"}>
       <Grid>
         <Typography variant="h1">Mõõtühikud</Typography>
         <Grid className={"AddButton"}>
@@ -210,13 +217,12 @@ const UnitIndex = () => {
         )}
       </DialogScreen>
       <TableContainer>
-        <Table>
+        <StyledTable>
           <TableHead>
             <TableRow>
               <TableCell>
                 <Typography variant={"h5"}>Nimetus</Typography>
               </TableCell>
-              <TableCell></TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -224,7 +230,7 @@ const UnitIndex = () => {
               <TableRow key={item.id}>
                 <TableCell>{item.name}</TableCell>
                 <TableCell>
-                  <BasicButton
+                  <StyledBasicButton
                     btnType={"black"}
                     label={"Muuda"}
                     onClick={() => {
@@ -243,7 +249,7 @@ const UnitIndex = () => {
               </TableRow>
             ))}
           </TableBody>
-        </Table>
+        </StyledTable>
       </TableContainer>
     </Grid>
   );

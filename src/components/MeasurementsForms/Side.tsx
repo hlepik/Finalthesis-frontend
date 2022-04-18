@@ -17,7 +17,7 @@ const Side = () => {
             <Grid item xs={12}>
               <Controller
                 control={control}
-                name="waistHeight"
+                name="userData.waistHeight"
                 render={({ field: { value }, fieldState: { error } }) => (
                   <TextField
                     helperText={error ? error.message : null}
@@ -29,12 +29,12 @@ const Side = () => {
                     InputProps={{ inputProps: { min: 1, step: 0.5 } }}
                     onChange={(e) => {
                       setValue(
-                        "waistHeight",
+                        "userData.waistHeight",
                         e.target.value.length > 0
                           ? parseFloat(e.target.value)
                           : ""
                       );
-                      clearErrors("waistHeight");
+                      clearErrors("userData.waistHeight");
                     }}
                     label="20. Üldpikkus"
                     value={value}
@@ -48,7 +48,7 @@ const Side = () => {
             <Grid item xs={12}>
               <Controller
                 control={control}
-                name="backLength"
+                name="userData.backLength"
                 render={({ field: { value }, fieldState: { error } }) => (
                   <TextField
                     helperText={error ? error.message : null}
@@ -60,12 +60,12 @@ const Side = () => {
                     InputProps={{ inputProps: { min: 1, step: 0.5 } }}
                     onChange={(e) => {
                       setValue(
-                        "backLength",
+                        "userData.backLength",
                         e.target.value.length > 0
                           ? parseFloat(e.target.value)
                           : ""
                       );
-                      clearErrors("backLength");
+                      clearErrors("userData.backLength");
                     }}
                     label="21. Seljapikkus"
                     value={value}
@@ -79,7 +79,7 @@ const Side = () => {
             <Grid item xs={12}>
               <Controller
                 control={control}
-                name="chestHeight"
+                name="userData.chestHeight"
                 render={({ field: { value }, fieldState: { error } }) => (
                   <TextField
                     helperText={error ? error.message : null}
@@ -91,12 +91,12 @@ const Side = () => {
                     InputProps={{ inputProps: { min: 1, step: 0.5 } }}
                     onChange={(e) => {
                       setValue(
-                        "chestHeight",
+                        "userData.chestHeight",
                         e.target.value.length > 0
                           ? parseFloat(e.target.value)
                           : ""
                       );
-                      clearErrors("chestHeight");
+                      clearErrors("userData.chestHeight");
                     }}
                     label="22. Rinnakõrgus"
                     value={value}

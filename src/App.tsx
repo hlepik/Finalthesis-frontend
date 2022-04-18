@@ -9,15 +9,8 @@ import CategoryIndex from "./containers/category/Index";
 import UserPage from "./containers/user/UserPage";
 import HomePage from "./containers/HomePage";
 import AppRoleIndex from "./containers/appRole/Index";
-import AppRoleEdit from "./containers/appRole/Edit";
-import AppRoleCreate from "./containers/appRole/Create";
-import AppRoleDelete from "./containers/appRole/Delete";
 import AppRoleChange from "./containers/appRole/Change";
-import AppRoleDetails from "./containers/appRole/Details";
-import AppUserDetails from "./containers/appUser/Details";
-import AppUserDelete from "./containers/appUser/Delete";
 import AppUserIndex from "./containers/appUser/Index";
-import AppUserEdit from "./containers/appUser/Edit";
 import UnitIndex from "./containers/unit/Index";
 
 import RegisterPage from "./containers/identity/RegisterPage";
@@ -25,6 +18,11 @@ import { ThemeProvider, StyledEngineProvider } from "@mui/material";
 import { theme } from "./utils/theme";
 import InstructionCreate from "./containers/instruction/Create";
 import InstructionIndex from "./containers/instruction/Index";
+import MeasurementTypeIndex from "./containers/measurementType/Index";
+import UserPatternIndex from "./containers/userPattern/Index";
+import PatternIndex from "./containers/patterns/Index";
+import UserPatternDetail from "./containers/userPattern/Detail";
+import AboutUs from "./containers/AboutUs";
 
 function App() {
   const setAuthInfo = (
@@ -48,7 +46,11 @@ function App() {
                 <Route path="/category" element={<CategoryIndex />} />
                 <Route path="/instruction" element={<InstructionIndex />} />
                 <Route
-                  path="/instruction/create"
+                  path="/instruction/create/:id"
+                  element={<InstructionCreate />}
+                />
+                <Route
+                  path="/instruction/create/new"
                   element={<InstructionCreate />}
                 />
 
@@ -56,17 +58,23 @@ function App() {
                 <Route path="/register" element={<RegisterPage />} />
                 <Route path="/andmed" element={<UserPage />} />
 
-                <Route path="/role/create" element={<AppRoleCreate />} />
-                <Route path="/role/edit/:id" element={<AppRoleEdit />} />
-                <Route path="/role/delete/:id" element={<AppRoleDelete />} />
                 <Route path="/role/change/:id" element={<AppRoleChange />} />
-                <Route path="/role/:id" element={<AppRoleDetails />} />
                 <Route path="/role" element={<AppRoleIndex />} />
 
-                <Route path="/appUser/edit/:id" element={<AppUserEdit />} />
-                <Route path="/appUser/delete/:id" element={<AppUserDelete />} />
-                <Route path="/appUser/:id" element={<AppUserDetails />} />
                 <Route path="/appUser" element={<AppUserIndex />} />
+                <Route path="/aboutUs" element={<AboutUs />} />
+
+                <Route
+                  path="/measurementType"
+                  element={<MeasurementTypeIndex />}
+                />
+                <Route
+                  path="/userPattern/:id"
+                  element={<UserPatternDetail />}
+                />
+
+                <Route path="/userPattern" element={<UserPatternIndex />} />
+                <Route path="/patterns" element={<PatternIndex />} />
 
                 <Route path="/unit" element={<UnitIndex />} />
 

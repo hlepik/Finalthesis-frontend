@@ -12,13 +12,16 @@ type IconType =
   | "tick"
   | "send"
   | "add"
+  | "delete"
   | "remove";
+
 type BtnType =
   | "yellow"
   | "black"
   | "transparent"
   | "gray"
   | "borderGray"
+  | "borderRed"
   | "red";
 
 interface IOutlinedBtn extends ButtonProps {
@@ -26,6 +29,7 @@ interface IOutlinedBtn extends ButtonProps {
   iconType?: IconType;
   noLabel?: boolean;
   btnType: BtnType;
+  paddingSide?: number;
 }
 
 const getBtnSvgIconByType = (
@@ -104,6 +108,16 @@ const getBtnSvgIconByType = (
         />
       </>
     ),
+    delete: (
+      <>
+        <path
+          d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"
+          stroke={color}
+          strokeLinejoin="round"
+          strokeWidth="2"
+        />
+      </>
+    ),
   };
 
   const path =
@@ -120,12 +134,16 @@ const getBtnSvgIconByType = (
 
 const StyledBtn = styled(Button, {
   shouldForwardProp: (prop) =>
-    prop !== "noLabel" && prop !== "btnType" && prop !== "rotate",
+    prop !== "noLabel" &&
+    prop !== "btnType" &&
+    prop !== "rotate" &&
+    prop !== "paddingSide",
 })<{
   noLabel?: boolean;
   btnType: IBtnType;
   rotate?: boolean;
-}>(({ noLabel, btnType, rotate }) => ({
+  paddingSide?: number;
+}>(({ noLabel, btnType, rotate, paddingSide }) => ({
   fontFamily: "Montserrat",
   fontSize: "1rem",
   border: btnType.border,
@@ -133,8 +151,9 @@ const StyledBtn = styled(Button, {
   backgroundColor: btnType.backgroundColor,
   textAlign: "center",
   borderRadius: "40px",
-  paddingLeft: "2rem",
-  paddingRight: "2rem",
+  padding: noLabel
+    ? 0
+    : `16px ${_.isNumber(paddingSide) ? `${paddingSide}px` : "32px"}`,
   height: "3rem",
   width: "auto",
   "&:hover": {
@@ -161,6 +180,7 @@ const iconTypes: {
   send: IIcon;
   add: IIcon;
   remove: IIcon;
+  delete: IIcon;
 } = {
   close: {
     height: "15",
@@ -198,6 +218,12 @@ const iconTypes: {
     viewBox: "0 0 18 2",
     isLeftSide: false,
   },
+  delete: {
+    height: "24",
+    width: "24",
+    viewBox: "0 0 24 24",
+    isLeftSide: false,
+  },
 };
 
 export interface IBtnType {
@@ -213,6 +239,7 @@ const btnTypes: {
   gray: IBtnType;
   borderGray: IBtnType;
   red: IBtnType;
+  borderRed: IBtnType;
 } = {
   yellow: {
     backgroundColor: COLOR_GOLD,
@@ -245,6 +272,11 @@ const btnTypes: {
     color: "rgb(253, 237, 237)",
     border: "4px solid rgb(253, 237, 237)",
   },
+  borderRed: {
+    backgroundColor: "transparent",
+    color: "#ef5350",
+    border: "none",
+  },
 };
 
 const BasicButton: FC<IOutlinedBtn> = ({
@@ -252,6 +284,7 @@ const BasicButton: FC<IOutlinedBtn> = ({
   btnType,
   iconType,
   noLabel,
+  paddingSide,
   ...rest
 }) => {
   const getCorrectBtnType = (btnTypeName: BtnType) => {
@@ -298,6 +331,7 @@ const BasicButton: FC<IOutlinedBtn> = ({
       btnType={getCorrectBtnType(btnType)}
       noLabel={_.isEmpty(label)}
       rotate={iconType === "previous"}
+      paddingSide={paddingSide}
       {...rest}
     >
       {getContent(btnType, label, iconT, noLabel)}

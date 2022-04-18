@@ -1,11 +1,4 @@
-import {
-  FC,
-  useCallback,
-  useContext,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import { FC, useEffect, useState } from "react";
 import { MobileStepper } from "@mui/material";
 import DialogScreen, { IDialogScreen } from "./DialogScreen";
 import { theme } from "../utils/theme";
@@ -17,7 +10,6 @@ import BasicButton from "./BasicButton";
 import Main from "./MeasurementsForms/Main";
 import { BaseService } from "../service/base-service";
 import { IBodyMeasurements } from "../dto/IBodyMeasurements";
-import { AppContext } from "../context/AppContext";
 import { FormProvider, useForm } from "react-hook-form";
 import Confirmation from "./MeasurementsForms/Confirmation";
 import { IAppUser } from "../dto/IAppUser";
@@ -31,7 +23,6 @@ const MeasurementsStepper: FC<IDialogScreen> = ({
   token,
   data,
 }) => {
-  const [user, setUser] = useState({} as IAppUser);
   const [activeStep, setActiveStep] = useState(0);
   const [measurements, setMeasurements] = useState({} as IBodyMeasurements);
   const [modalState, setModalState] = useState(false);
@@ -74,8 +65,6 @@ const MeasurementsStepper: FC<IDialogScreen> = ({
   const handleNext = () => {
     isCurrentStepValid().then((isValid) => {
       if (isValid) {
-        saveUserData();
-
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
       } else {
         console.log("step is not valid");
@@ -86,22 +75,11 @@ const MeasurementsStepper: FC<IDialogScreen> = ({
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
-  const saveUserData = () => {
-    // TODO: save data
-    /*
-    ApplicationService.post(objToFormData(formMethods.getValues())).catch(err => console.log(err));
-*/
-  };
-  /*const loadData = useCallback(async () => {
-    console.log(appState.token);
-
-
-  }, [appState]);*/
 
   const validateApplicantData = () => {
     let isInvalid = false;
 
-    /* if (formMethods.getValues("userData.length") < 1) {
+    if (formMethods.getValues("userData.length") < 1) {
       formMethods.setError("userData.length", {
         type: "manual",
         message: "Pikkuse väärtus liiga väike.",
@@ -114,14 +92,14 @@ const MeasurementsStepper: FC<IDialogScreen> = ({
         message: "Mõõtühiku on kohustuslik.",
       });
       isInvalid = true;
-    }*/
+    }
     return !isInvalid;
   };
 
   const validateFrontData = () => {
     let isInvalid = false;
 
-    /*if (formMethods.getValues("userData.neckSize") < 1) {
+    if (formMethods.getValues("userData.neckSize") < 1) {
       formMethods.setError("userData.neckSize", {
         type: "manual",
         message: "Kaela ümbermõõt liiga väike.",
@@ -225,14 +203,14 @@ const MeasurementsStepper: FC<IDialogScreen> = ({
         message: "Pahkluu ümbermõõt liiga väike.",
       });
       isInvalid = true;
-    }*/
+    }
     return !isInvalid;
   };
 
   const validateBackData = () => {
     let isInvalid = false;
 
-    /*if (formMethods.getValues("userData.insideLegLength") < 1) {
+    if (formMethods.getValues("userData.insideLegLength") < 1) {
       formMethods.setError("userData.insideLegLength", {
         type: "manual",
         message: "Jala pikkus liiga väike.",
@@ -274,14 +252,13 @@ const MeasurementsStepper: FC<IDialogScreen> = ({
       });
       isInvalid = true;
     }
-*/
     return !isInvalid;
   };
 
   const validateSideData = () => {
     let isInvalid = false;
 
-    /*if (formMethods.getValues("userData.waistHeight") < 1) {
+    if (formMethods.getValues("userData.waistHeight") < 1) {
       formMethods.setError("userData.waistHeight", {
         type: "manual",
         message: "Üldpikkus liiga väike.",
@@ -301,18 +278,18 @@ const MeasurementsStepper: FC<IDialogScreen> = ({
         message: "Rinnakõrgus liiga väike.",
       });
       isInvalid = true;
-    }*/
+    }
 
     return !isInvalid;
   };
   const validateSittingData = () => {
-    /*if (formMethods.getValues("userData.buttockHeight") < 1) {
+    if (formMethods.getValues("userData.buttockHeight") < 1) {
       formMethods.setError("userData.buttockHeight", {
         type: "manual",
         message: "Istmiku kõrgus liiga väike.",
       });
       return false;
-    }*/
+    }
     return true;
   };
 
@@ -352,12 +329,10 @@ const MeasurementsStepper: FC<IDialogScreen> = ({
     }
   };
   const onSubmit = async (formData: IFormValues) => {
-    console.log("siin");
-    if (data !== undefined) {
+    if (data?.id !== undefined) {
       const url = "/BodyMeasurements/" + formData.userData.id;
       let response = await BaseService.edit(url, formData.userData, token!);
       if (response.statusCode >= 200 && response.statusCode < 400) {
-        console.log("õnnestus");
       }
     } else {
       let response = await BaseService.post(
@@ -365,7 +340,6 @@ const MeasurementsStepper: FC<IDialogScreen> = ({
         formData.userData,
         token!
       );
-
       if (response.statusCode >= 200 && response.statusCode < 400) {
         console.log("andmed edukalt salvestatud");
       } else {
@@ -431,7 +405,7 @@ const MeasurementsStepper: FC<IDialogScreen> = ({
                     btnType={activeStep === 0 ? "gray" : "transparent"}
                     iconType={"previous"}
                     onClick={handleBack}
-                    label={activeStep === 0 ? "" : "Tagasi"}
+                    label={"Tagasi"}
                     disabled={activeStep === 0}
                   />
                 )}

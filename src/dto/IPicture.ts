@@ -1,5 +1,7 @@
 export interface IPicture {
-    id?: string;
-    url: string;
-    patternInstructionId: string;
+  id?: string;
+  name: string;
+  url: string;
+  priority: number;
+  patternInstructionId: string;
 }

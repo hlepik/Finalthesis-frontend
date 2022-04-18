@@ -1,12 +1,18 @@
 import { IPatternInstruction } from "./IPatternInstruction";
+import { IExtraSize } from "./IExtraSize";
 
 export interface IInstruction {
   id?: string;
   dateAdded: Date;
   name: string;
+  description: string;
   totalStep: number;
-  patternInstruction: IPatternInstruction[];
-  subCategoryId: string;
-  patternFile: "";
-  fileName: "";
+  patternInstructions: IPatternInstruction[];
+  categoryId: string;
+  patternFile: string;
+  fileName: string;
+  categoryName: string;
+  mainPictureName: string;
+  mainPicture: string;
+  extraSizes: IExtraSize[];
 }

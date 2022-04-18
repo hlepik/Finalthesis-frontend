@@ -3,11 +3,11 @@ import { ApiBaseUrl } from "../configuration";
 import { IFetchResponse } from "../types/IFetchResponse";
 import { IMessages } from "../types/IMessages";
 
-export abstract class BaseService {
+export abstract class FormDataService {
   protected static axios = Axios.create({
     baseURL: ApiBaseUrl,
     headers: {
-      "Content-Type": "application/json",
+      "Content-Type": "multipart/form-data",
     },
   });
 
@@ -30,7 +30,7 @@ export abstract class BaseService {
     try {
       let response = await this.axios.get<TEntity[]>(
         apiEndpoint,
-        BaseService.getAxiosConfiguration(token)
+        FormDataService.getAxiosConfiguration(token)
       );
       return {
         ok: response.status <= 299,
@@ -54,7 +54,7 @@ export abstract class BaseService {
     try {
       let response = await this.axios.get<TEntity>(
         apiEndpoint,
-        BaseService.getAxiosConfiguration(token)
+        FormDataService.getAxiosConfiguration(token)
       );
       return {
         ok: response.status <= 299,
@@ -79,7 +79,7 @@ export abstract class BaseService {
       let response = await this.axios.put<TEntity>(
         apiEndpoint,
         editData,
-        BaseService.getAxiosConfiguration(token)
+        FormDataService.getAxiosConfiguration(token)
       );
       return {
         ok: response.status <= 299,
@@ -105,7 +105,7 @@ export abstract class BaseService {
       let response = await this.axios.post<TEntity>(
         apiEndpoint,
         postData,
-        BaseService.getAxiosConfiguration(token)
+        FormDataService.getAxiosConfiguration(token)
       );
       return {
         ok: response.status <= 299,
@@ -128,7 +128,7 @@ export abstract class BaseService {
     try {
       let response = await this.axios.delete<TEntity>(
         apiEndpoint,
-        BaseService.getAxiosConfiguration(token)
+        FormDataService.getAxiosConfiguration(token)
       );
       return {
         ok: response.status <= 299,

@@ -5,7 +5,27 @@ import { IAppRole } from "../../dto/IAppRole";
 import { IAppUser } from "../../dto/IAppUser";
 import { BaseService } from "../../service/base-service";
 import AlertComponent, { EAlertClass } from "../../components/AlertComponent";
+import BasicButton from "../../components/BasicButton";
+import {
+  Checkbox,
+  Grid,
+  styled,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableRow,
+  Typography,
+} from "@mui/material";
 
+const StyledText = styled(Typography)({
+  fontWeight: 600,
+  marginTop: "2rem",
+  marginLeft: "1rem",
+});
+const StyledBasicButton = styled(BasicButton)({
+  marginTop: "2rem",
+});
 const AppRoleChange = () => {
   let { id } = useParams();
   const appState = useContext(AppContext);
@@ -82,70 +102,72 @@ const AppRoleChange = () => {
   }, [loadData]);
 
   return (
-    <>
+    <Grid container className={"layoutContainer"}>
       <form onSubmit={(e) => submitClicked(e.nativeEvent)}>
-        <h2 className="bg-info p-1 text-white">Lisa {role.name}</h2>
-        <table className="table table-bordered table-sm">
-          <AlertComponent
-            show={alertMessage !== ""}
-            message={alertMessage}
-            type={EAlertClass.Danger}
-            paddingSide={false}
-          />
+        <StyledText variant={"h4"}>Lisa {role.name}</StyledText>
+        <AlertComponent
+          show={alertMessage !== ""}
+          message={alertMessage}
+          type={EAlertClass.Danger}
+          paddingSide={false}
+        />
+        <TableContainer>
+          <Table>
+            <TableBody>
+              {nonMemberData.map((user) => (
+                <TableRow>
+                  <TableCell>{user.email}</TableCell>
+                  <TableCell>
+                    <Checkbox
+                      name="NonMembersIds"
+                      value={user.id}
+                      onChange={(e) =>
+                        setUser({
+                          ...userData,
+                          id: e.target.value,
+                          name: role.name,
+                        })
+                      }
+                    />
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+        <StyledText variant={"h4"}>Eemalda {role.name}</StyledText>
+        <TableContainer>
+          <Table>
+            <TableBody>
+              {memberData.map((user) => (
+                <TableRow>
+                  <TableCell>{user.email}</TableCell>
+                  <TableCell>
+                    <Checkbox
+                      name="MembersIds"
+                      value={user.id}
+                      onChange={(e) =>
+                        setOutOfRole({
+                          ...nonRoleData,
+                          id: e.target.value,
+                          name: role.name,
+                        })
+                      }
+                    />
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
 
-          <>
-            {nonMemberData.map((user) => (
-              <tr>
-                <td>{user.email}</td>
-
-                <td>
-                  <input
-                    type="checkbox"
-                    name="NonMembersIds"
-                    value={user.id}
-                    onChange={(e) =>
-                      setUser({
-                        ...userData,
-                        id: e.target.value,
-                        name: role.name,
-                      })
-                    }
-                  />
-                </td>
-              </tr>
-            ))}
-          </>
-        </table>
-
-        <h2 className="bg-info p-1 text-white">Eemalda {role.name}</h2>
-        <table className="table table-bordered table-sm">
-          <>
-            {memberData.map((user) => (
-              <tr>
-                <td>{user.email}</td>
-                <td>
-                  <input
-                    type="checkbox"
-                    name="MembersIds"
-                    value={user.id}
-                    onChange={(e) =>
-                      setOutOfRole({
-                        ...nonRoleData,
-                        id: e.target.value,
-                        name: role.name,
-                      })
-                    }
-                  />
-                </td>
-              </tr>
-            ))}
-          </>
-        </table>
-        <button type="submit" className="btn btn-primary">
-          Salvesta
-        </button>
+        <StyledBasicButton
+          btnType={"black"}
+          label={"Salvesta"}
+          type={"submit"}
+        />
       </form>
-    </>
+    </Grid>
   );
 };
 

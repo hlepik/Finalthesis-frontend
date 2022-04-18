@@ -1,12 +1,12 @@
 import { Fragment, useContext, useEffect, useState } from "react";
 import { AppContext } from "../../context/AppContext";
 import {
-  Button,
   FormControl,
   Grid,
   Input,
   InputAdornment,
   InputLabel,
+  styled,
   TextField,
 } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
@@ -16,9 +16,14 @@ import { Controller, useForm } from "react-hook-form";
 import BasicButton from "../../components/BasicButton";
 import { IdentityService } from "../../service/identity-service";
 import IconButton from "@mui/material/IconButton";
-import { BaseService } from "../../service/base-service";
-import { ICategory } from "../../dto/ICategory";
-import { IAppRole } from "../../dto/IAppRole";
+
+const StyledGrid = styled(Grid)({
+  marginBottom: "1rem",
+  width: "100%",
+});
+const StyledForm = styled("form")({
+  width: "100%",
+});
 
 interface ILoginInputs {
   email: string;
@@ -43,15 +48,10 @@ const LoginPage = () => {
   const loginClicked = async () => {
     let response = await IdentityService.Login("Account/Login", getValues());
     if (!response.ok) {
-      console.log(response);
       if (response.statusCode === 404) {
         return;
       }
     } else {
-      const role = await BaseService.get<IAppRole>(
-        "/AppRole/" + appState.id,
-        appState.token!
-      );
       setAlertMessage("");
 
       appState.setAuthInfo(
@@ -69,7 +69,7 @@ const LoginPage = () => {
       {appState.token !== null ? <Navigate to="/andmed" /> : null}
       <Grid container className="LoginContainer">
         <Grid className="LoginBox">
-          <form onSubmit={handleSubmit(loginClicked)}>
+          <StyledForm onSubmit={handleSubmit(loginClicked)}>
             <AlertComponent
               show={alertMessage !== ""}
               message={alertMessage}
@@ -77,30 +77,32 @@ const LoginPage = () => {
               paddingSide={false}
             />
 
-            <Controller
-              control={control}
-              name="email"
-              render={({
-                field: { onChange, value, name },
-                fieldState: { error },
-              }) => (
-                <TextField
-                  error={!!error}
-                  fullWidth
-                  helperText={error ? error.message : null}
-                  label={"Email*"}
-                  value={value}
-                  variant="standard"
-                  onChange={(e) => {
-                    clearErrors(name);
-                    onChange(e);
-                  }}
-                />
-              )}
-              rules={{
-                required: "Emaili sisestamine on kohustuslik.",
-              }}
-            />
+            <StyledGrid>
+              <Controller
+                control={control}
+                name="email"
+                render={({
+                  field: { onChange, value, name },
+                  fieldState: { error },
+                }) => (
+                  <TextField
+                    error={!!error}
+                    fullWidth
+                    helperText={error ? error.message : null}
+                    label={"Email*"}
+                    value={value}
+                    variant="standard"
+                    onChange={(e) => {
+                      clearErrors(name);
+                      onChange(e);
+                    }}
+                  />
+                )}
+                rules={{
+                  required: "Emaili sisestamine on kohustuslik.",
+                }}
+              />
+            </StyledGrid>
             <Controller
               control={control}
               name="password"
@@ -150,7 +152,7 @@ const LoginPage = () => {
                 type={"submit"}
               />
             </Grid>
-          </form>
+          </StyledForm>
         </Grid>
       </Grid>
     </Fragment>

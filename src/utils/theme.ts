@@ -5,7 +5,7 @@ export const theme: Theme = createTheme({
   typography: {
     fontFamily: "Montserrat",
     h1: {
-      color: "black",
+      color: COLOR_BLACK,
       fontSize: "3rem",
       lineHeight: "3rem",
     },
@@ -34,11 +34,13 @@ export const theme: Theme = createTheme({
       fontWeight: 700,
     },
     body1: {
+      color: COLOR_BLACK,
       fontSize: "1rem",
       fontWeight: "bold",
       marginBottom: "4px",
     },
     body2: {
+      color: COLOR_BLACK,
       fontSize: "1rem",
       marginBottom: "4px",
     },

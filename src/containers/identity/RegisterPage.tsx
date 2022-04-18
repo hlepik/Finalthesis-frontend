@@ -6,6 +6,7 @@ import {
   FormControl,
   Grid,
   InputLabel,
+  styled,
   TextField,
 } from "@mui/material";
 import { Navigate } from "react-router-dom";
@@ -19,6 +20,14 @@ import { EMAIL_REGEX } from "../../utils/regex";
 import { IdentityService } from "../../service/identity-service";
 import AlertComponent, { EAlertClass } from "../../components/AlertComponent";
 import BasicButton from "../../components/BasicButton";
+
+const StyledForm = styled("form")({
+  width: "100%",
+});
+const StyledGrid = styled(Grid)({
+  marginBottom: "1rem",
+  width: "100%",
+});
 
 interface IFormValues {
   firstName: string;
@@ -46,7 +55,6 @@ const RegisterPage = () => {
     setError,
     clearErrors,
     getValues,
-    setValue,
   } = useForm<IFormValues>({ defaultValues: registerData });
 
   const handleClickShowPassword = () => {
@@ -132,14 +140,16 @@ const RegisterPage = () => {
     }
   };
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    console.log(getValues());
+  }, []);
 
   return (
     <Fragment>
       {appState.token !== null ? <Navigate to="/" /> : null}
       <Grid container className="LoginContainer">
         <Grid className="LoginBox">
-          <form onSubmit={handleSubmit(registerClicked)}>
+          <StyledForm onSubmit={handleSubmit(registerClicked)}>
             <AlertComponent
               show={alertMessage !== ""}
               message={alertMessage}
@@ -147,120 +157,130 @@ const RegisterPage = () => {
               paddingSide={false}
             />
 
-            <Controller
-              control={control}
-              name="firstName"
-              render={({
-                field: { onChange, value, name },
-                fieldState: { error },
-              }) => (
-                <TextField
-                  error={!!error}
-                  fullWidth
-                  helperText={error ? error.message : null}
-                  label={"Eesnimi*"}
-                  value={value}
-                  variant="standard"
-                  onChange={(e) => {
-                    clearErrors(name);
-                    onChange(e);
-                  }}
-                />
-              )}
-              rules={{
-                required: "Parooli sisestamine on kohustuslik.",
-              }}
-            />
-            <Controller
-              control={control}
-              name="lastName"
-              render={({
-                field: { onChange, value, name },
-                fieldState: { error },
-              }) => (
-                <TextField
-                  error={!!error}
-                  fullWidth
-                  helperText={error ? error.message : null}
-                  label={"Perekonnanimi*"}
-                  value={value}
-                  variant="standard"
-                  onChange={(e) => {
-                    clearErrors(name);
-                    onChange(e);
-                  }}
-                />
-              )}
-              rules={{
-                required: "Perekonnanime sisestamine on kohustuslik",
-              }}
-            />
-            <Controller
-              control={control}
-              name="email"
-              render={({
-                field: { onChange, value, name },
-                fieldState: { error },
-              }) => (
-                <TextField
-                  error={!!error}
-                  fullWidth
-                  helperText={error ? error.message : null}
-                  label={"Email*"}
-                  value={value}
-                  variant="standard"
-                  onChange={(e) => {
-                    clearErrors(name);
-                    onChange(e);
-                  }}
-                />
-              )}
-              rules={{
-                required: "Emaili sisestamine on kohustuslik",
-              }}
-            />
-            <Controller
-              control={control}
-              name="password"
-              render={({
-                field: { onChange, value, name },
-                fieldState: { error, invalid },
-              }) => (
-                <FormControl variant="standard">
-                  <InputLabel htmlFor="standard-adornment-password">
-                    Parool*
-                  </InputLabel>
-                  <Input
+            <StyledGrid>
+              <Controller
+                control={control}
+                name="firstName"
+                render={({
+                  field: { onChange, value, name },
+                  fieldState: { error },
+                }) => (
+                  <TextField
                     error={!!error}
-                    type={showPassword ? "text" : "password"}
+                    fullWidth
+                    helperText={error ? error.message : null}
+                    label={"Eesnimi*"}
                     value={value}
+                    variant="standard"
                     onChange={(e) => {
+                      clearErrors(name);
                       onChange(e);
                     }}
-                    endAdornment={
-                      <InputAdornment position="end">
-                        <IconButton
-                          aria-label="toggle password visibility"
-                          onClick={handleClickShowPassword}
-                          onMouseDown={handleMouseDownPassword}
-                        >
-                          {showPassword ? <VisibilityOff /> : <Visibility />}
-                        </IconButton>
-                      </InputAdornment>
-                    }
                   />
-                </FormControl>
-              )}
-              rules={{
-                required: "Parooli sisestamine on kohustuslik.",
-              }}
-            />
-            {getFieldState("password").invalid ? (
-              <div className="ErrorMessage">
-                {getFieldState("password").error!.message}
-              </div>
-            ) : null}
+                )}
+                rules={{
+                  required: "Eesnime sisestamine on kohustuslik.",
+                }}
+              />
+            </StyledGrid>
+            <StyledGrid>
+              <Controller
+                control={control}
+                name="lastName"
+                render={({
+                  field: { onChange, value, name },
+                  fieldState: { error },
+                }) => (
+                  <TextField
+                    error={!!error}
+                    fullWidth
+                    helperText={error ? error.message : null}
+                    label={"Perekonnanimi*"}
+                    value={value}
+                    variant="standard"
+                    onChange={(e) => {
+                      clearErrors(name);
+                      onChange(e);
+                    }}
+                  />
+                )}
+                rules={{
+                  required: "Perekonnanime sisestamine on kohustuslik",
+                }}
+              />
+            </StyledGrid>
+            <StyledGrid>
+              <Controller
+                control={control}
+                name="email"
+                render={({
+                  field: { onChange, value, name },
+                  fieldState: { error },
+                }) => (
+                  <TextField
+                    error={!!error}
+                    fullWidth
+                    helperText={error ? error.message : null}
+                    label={"Email*"}
+                    value={value}
+                    autoComplete="off"
+                    variant="standard"
+                    onChange={(e) => {
+                      clearErrors(name);
+                      onChange(e);
+                    }}
+                  />
+                )}
+                rules={{
+                  required: "Emaili sisestamine on kohustuslik",
+                }}
+              />
+            </StyledGrid>
+            <StyledGrid>
+              <Controller
+                control={control}
+                name="password"
+                render={({
+                  field: { onChange, value, name },
+                  fieldState: { error, invalid },
+                }) => (
+                  <FormControl variant="standard">
+                    <InputLabel htmlFor="standard-adornment-password">
+                      Parool*
+                    </InputLabel>
+                    <Input
+                      error={!!error}
+                      type={showPassword ? "text" : "password"}
+                      value={value}
+                      autoComplete="new-password "
+                      onChange={(e) => {
+                        onChange(e);
+                      }}
+                      endAdornment={
+                        <InputAdornment position="end">
+                          <IconButton
+                            aria-label="toggle password visibility"
+                            onClick={handleClickShowPassword}
+                            onMouseDown={handleMouseDownPassword}
+                          >
+                            {showPassword ? <VisibilityOff /> : <Visibility />}
+                          </IconButton>
+                        </InputAdornment>
+                      }
+                    />
+                  </FormControl>
+                )}
+                rules={{
+                  required: "Parooli sisestamine on kohustuslik.",
+                }}
+              />
 
+              {getFieldState("password").invalid ? (
+                <div className="ErrorMessage">
+                  {getFieldState("password").error!.message}
+                </div>
+              ) : null}
+            </StyledGrid>
             <FormControl variant="standard">
               <InputLabel htmlFor="standard-adornment-password">
                 Kinnita parool*
@@ -295,7 +315,7 @@ const RegisterPage = () => {
                 type={"submit"}
               />
             </Grid>
-          </form>
+          </StyledForm>
         </Grid>
       </Grid>
     </Fragment>

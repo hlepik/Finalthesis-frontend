@@ -20,7 +20,7 @@ const Sitting = () => {
             <Grid item xs={12}>
               <Controller
                 control={control}
-                name="buttockHeight"
+                name="userData.buttockHeight"
                 render={({ field: { value }, fieldState: { error } }) => (
                   <TextField
                     helperText={error ? error.message : null}
@@ -32,12 +32,12 @@ const Sitting = () => {
                     InputProps={{ inputProps: { min: 1, step: 0.5 } }}
                     onChange={(e) => {
                       setValue(
-                        "buttockHeight",
+                        "userData.buttockHeight",
                         e.target.value.length > 0
                           ? parseFloat(e.target.value)
                           : ""
                       );
-                      clearErrors("buttockHeight");
+                      clearErrors("userData.buttockHeight");
                     }}
                     label="Istmiku kõrgus"
                     value={value}
