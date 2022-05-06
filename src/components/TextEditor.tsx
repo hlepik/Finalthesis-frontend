@@ -75,20 +75,14 @@ const TinyEditor: FC<ITinyEditor> = ({
     <EditorWrapper error={!!error} required={!!required}>
       <Typography>{title}</Typography>
       <Editor
-        apiKey="1ek114ugd7jtxfuy9n3843fsfcvq1k3xvkm5xhjwyk2vk8b6"
         init={{
           height: 200,
           outputFormat: "html",
           branding: false,
           menubar: false,
           statusbar: false,
-          deprecation_warnings: false,
           default_link_target: "_blank",
-          plugins: [
-            "advlist autolink lists link image charmap print preview anchor",
-            "searchreplace visualblocks code fullscreen",
-            "insertdatetime media table paste code textcolor",
-          ],
+          plugins: "image table",
           toolbar:
             "undo redo | formatselect | bold italic | forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | code | removeformat | link | image | table tabledelete | tableprops tablerowprops tablecellprops | tableinsertrowbefore tableinsertrowafter tabledeleterow | tableinsertcolbefore tableinsertcolafter tabledeletecol",
         }}

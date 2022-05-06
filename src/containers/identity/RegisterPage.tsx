@@ -109,6 +109,7 @@ const RegisterPage = () => {
 
       return;
     }
+    console.log(getValues());
     let response = await IdentityService.register(
       "Account/Register",
       getValues()
@@ -140,13 +141,11 @@ const RegisterPage = () => {
     }
   };
 
-  useEffect(() => {
-    console.log(getValues());
-  }, []);
+  useEffect(() => {}, []);
 
   return (
     <Fragment>
-      {appState.token !== null ? <Navigate to="/" /> : null}
+      {appState.token !== null ? <Navigate to="/andmed" /> : null}
       <Grid container className="LoginContainer">
         <Grid className="LoginBox">
           <StyledForm onSubmit={handleSubmit(registerClicked)}>

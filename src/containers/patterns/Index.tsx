@@ -115,7 +115,7 @@ const StyledImage = styled("div")({
   width: "100%",
   padding: "1rem",
   backgroundColor: "rgba(247, 216, 123, 0.4)",
-  height: "350px",
+  height: "450px",
   borderBottomRightRadius: "30% 20%",
   borderTopLeftRadius: "30% 20%",
 });

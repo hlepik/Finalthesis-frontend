@@ -90,7 +90,7 @@ const Header = () => {
         <Grid className="HeaderLinks">
           <Link to={"/"}>
             <StyledImage>
-              <img src={"/images/logo6.png"} />
+              <img src={"/images/logo.png"} />
             </StyledImage>
           </Link>
           <LinkGrid>

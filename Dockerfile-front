@@ -1,0 +1,32 @@
+#FROM node:14 as build-image
+#WORKDIR /finalthesis
+
+
+
+#COPY ./public /finalthesis/public
+#COPY ./src /finalthesis/src
+
+
+
+#COPY ./package-lock.json /finalthesis/
+#COPY ./tsconfig.json /finalthesis/
+#COPY ./package.json /finalthesis/
+
+
+
+#RUN cd /finalthesis && npm install
+#RUN cd /finalthesis && npm run build
+
+
+
+#debug - list build image
+#RUN cd /finalthesis && ls -la
+
+#copy over stuff from build image into production server
+FROM nginx:stable-alpine
+
+COPY build /usr/share/nginx/html
+COPY nginx.conf /etc/nginx/nginx.conf
+
+CMD ["nginx", "-g", "daemon off;"]
+

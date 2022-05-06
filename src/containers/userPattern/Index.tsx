@@ -17,6 +17,9 @@ const TableGrid = styled(Grid)({
   width: "100%",
   height: "500px",
 });
+const StyledTitle = styled(Typography)({
+  marginBottom: "2rem",
+});
 
 const UserPatternIndex = () => {
   const appState = useContext(AppContext);
@@ -95,7 +98,7 @@ const UserPatternIndex = () => {
 
   return (
     <Grid container className={"layoutContainer"}>
-      <Typography variant="h1">Pooleliolevad ja tehtud lõiked</Typography>
+      <StyledTitle variant="h1">Pooleliolevad ja tehtud lõiked</StyledTitle>
       <TableGrid>
         <DataGrid
           localeText={{

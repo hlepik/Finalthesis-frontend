@@ -28,6 +28,10 @@ const StyledBasicButton = styled(BasicButton)({
   marginLeft: "3rem",
   marginRight: "1rem",
 });
+const StyledGrid = styled(Grid)({
+  marginBottom: "1rem",
+  width: "100%",
+});
 const MeasurementTypeIndex = () => {
   const appState = useContext(AppContext);
   const [measurementType, setMeasurementType] = useState(
@@ -54,6 +58,7 @@ const MeasurementTypeIndex = () => {
     );
 
     if (result.ok && result.data) {
+      console.log(result.data);
       setMeasurementType(result.data);
     }
   }, [appState]);
@@ -76,6 +81,7 @@ const MeasurementTypeIndex = () => {
     }
     if (measurementType !== undefined) {
       setValue("name", measurementType.name);
+      setValue("dbName", measurementType.dbName);
       setValue("id", measurementType.id);
     }
     setModalState(!modalState);
@@ -117,9 +123,9 @@ const MeasurementTypeIndex = () => {
       return false;
     }
 
-    const url = "/MeasurementTypes";
+    let url = "/MeasurementTypes";
     if (dialogType === EDialogType.Edit) {
-      const url = "/Units/" + data.id;
+      url = "/MeasurementTypes/" + data.id;
       let response = await BaseService.edit(url, getValues(), appState.token!);
       if (response.statusCode >= 200 && response.statusCode < 400) {
         reset();
@@ -138,7 +144,8 @@ const MeasurementTypeIndex = () => {
       }
     }
   };
-
+  console.log("easurementType");
+  console.log(measurementType);
   useEffect(() => {
     loadData();
   }, [loadData]);
@@ -195,30 +202,37 @@ const MeasurementTypeIndex = () => {
 
             {dialogType === EDialogType.Delete ? null : (
               <>
-                <Controller
-                  control={control}
-                  name="name"
-                  render={({
-                    field: { onChange, value, name },
-                    fieldState: { error },
-                  }) => (
-                    <TextField
-                      error={!!error}
-                      fullWidth
-                      helperText={error ? error.message : null}
-                      label={"Nimetus*"}
-                      value={value}
-                      variant="standard"
-                      onChange={(e) => {
-                        onChange(e);
-                        setInsertSuccess(false);
-                      }}
-                    />
-                  )}
-                  rules={{
-                    required: "Nimetuse sisestamine on kohustuslik.",
-                  }}
-                />
+                <StyledGrid>
+                  <Controller
+                    control={control}
+                    name="name"
+                    render={({
+                      field: { onChange, value, name },
+                      fieldState: { error },
+                    }) => (
+                      <TextField
+                        error={!!error}
+                        fullWidth
+                        helperText={error ? error.message : null}
+                        label={"Nimetus*"}
+                        value={value}
+                        variant="standard"
+                        onChange={(e) => {
+                          onChange(e);
+                          setInsertSuccess(false);
+                        }}
+                      />
+                    )}
+                    rules={{
+                      required: "Nimetuse sisestamine on kohustuslik.",
+                    }}
+                  />
+                </StyledGrid>
+
+                <div>
+                  siin{getValues("dbName")}
+                  {getValues("name")}
+                </div>
                 <Controller
                   control={control}
                   name="dbName"
