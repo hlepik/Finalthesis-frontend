@@ -70,22 +70,28 @@ const RowGrid = styled(Grid)({
     marginLeft: "auto",
     marginRight: "auto",
     rowGap: "1rem",
-    width: "40rem",
+    width: "45rem",
     justifyContent: "center",
 });
 const ButtonGrid = styled(Grid)({
     display: "flex",
     justifyContent: "end",
+    columnGap: "0.5rem",
     marginTop: "2rem",
     marginBottom: "2rem",
 });
 const ImageGrid = styled(Grid)({
     height: "150px",
 });
+const StyledBasicButton = styled(BasicButton)({
+    marginTop: "1rem",
+    marginBottom: "1rem",
+});
 const StyledImg = styled("img")({
     height: "100%",
     width: "auto",
 });
+
 const StyledColumnGrid = styled(Grid)({
     display: "flex",
     flexDirection: "row",
@@ -94,9 +100,17 @@ const StyledColumnGrid = styled(Grid)({
 const SmallGrid = styled(Grid)({
     width: "20rem",
 });
+const MainContainer = styled(Grid)({
+    padding: "3rem",
+});
 const StyledTypography = styled(Typography)({
-    border: `5px solid ${COLOR_GOLD}`,
+    border: `5px solid rgb(239, 83, 80)`,
     padding: "1rem",
+});
+const StyledAccordion = styled(Accordion)({
+    backgroundColor: "rgb(229, 228, 228, 0.3)",
+    paddingLeft: "1.5rem",
+    paddingRight: "1.5rem",
 });
 const StyledButtonGrid = styled(Grid)({
     width: "15rem",
@@ -598,7 +612,7 @@ const InstructionCreate = () => {
         loadData();
     }, [loadData]);
     return (
-        <Grid container className={"layoutContainer"}>
+        <MainContainer>
             {canLoad ? (
                 <RowGrid>
                     <Typography variant={"h3"}>Uue lõike sisestamine</Typography>
@@ -717,9 +731,9 @@ const InstructionCreate = () => {
                                     name={`circleSkirtType`}
                                     render={({ field: { onChange, value }, fieldState: { error } }) => (
                                         <FormControlLabel
-                                            value={"fullCircle"}
+                                            value={"FullCircle"}
                                             onChange={onChange}
-                                            checked={watch("circleSkirtType") === "fullCircle"}
+                                            checked={watch("circleSkirtType") === "FullCircle"}
                                             control={
                                                 <Radio
                                                     onClick={() => {
@@ -736,9 +750,9 @@ const InstructionCreate = () => {
                                     name={`circleSkirtType`}
                                     render={({ field: { onChange, value }, fieldState: { error } }) => (
                                         <FormControlLabel
-                                            value={"halfCircle"}
+                                            value={"HalfCircle"}
                                             onChange={onChange}
-                                            checked={watch("circleSkirtType") === "halfCircle"}
+                                            checked={watch("circleSkirtType") === "HalfCircle"}
                                             control={
                                                 <Radio
                                                     onClick={() => {
@@ -755,9 +769,9 @@ const InstructionCreate = () => {
                                     name={`circleSkirtType`}
                                     render={({ field: { onChange, value }, fieldState: { error } }) => (
                                         <FormControlLabel
-                                            value={"quarterCircle"}
+                                            value={"QuarterCircle"}
                                             onChange={onChange}
-                                            checked={watch("circleSkirtType") === "quarterCircle"}
+                                            checked={watch("circleSkirtType") === "QuarterCircle"}
                                             control={
                                                 <Radio
                                                     onClick={() => {
@@ -807,8 +821,9 @@ const InstructionCreate = () => {
                                         error={!!error}
                                         fullWidth
                                         type={"number"}
+                                        InputProps={{ inputProps: { min: 1, step: 0.5 } }}
                                         label={"Avaruslisa suurus (cm)"}
-                                        value={value === undefined || value === null ? "" : value}
+                                        value={value === undefined || value === null ? 0 : value}
                                         variant="standard"
                                         onChange={(e) => {
                                             setValue(`extraSizes.${i}.extra`, parseInt(e.target.value));
@@ -911,7 +926,7 @@ const InstructionCreate = () => {
 
                     {[...Array(step)].map((x, i) => (
                         <Grid key={i}>
-                            <Accordion expanded={expanded === `panel${i}`} onChange={handleChange(`panel${i}`)}>
+                            <StyledAccordion expanded={expanded === `panel${i}`} onChange={handleChange(`panel${i}`)}>
                                 <AccordionSummary
                                     expandIcon={<ExpandMoreIcon />}
                                     aria-controls="panel1bh-content"
@@ -967,10 +982,9 @@ const InstructionCreate = () => {
                                     watch(`patternInstruction.${i}.pictureName`) !== null &&
                                     watch(`patternInstruction.${i}`) !== null ? (
                                         <>
-                                            <BasicButton
+                                            <StyledBasicButton
                                                 btnType={"transparent"}
                                                 label={"Eemalda pilt"}
-                                                paddingSide={0}
                                                 onClick={() =>
                                                     handleStepImageDelete(getValues(`patternInstruction.${i}`), i)
                                                 }
@@ -978,11 +992,9 @@ const InstructionCreate = () => {
                                         </>
                                     ) : (
                                         <>
-                                            <BasicButton
-                                                endIcon={<AddCircleIcon />}
-                                                btnType={"transparent"}
+                                            <StyledBasicButton
+                                                btnType={"black"}
                                                 label={"Lisa pilt"}
-                                                paddingSide={0}
                                                 onClick={() => handlePictureDialogOpen(i)}
                                             />
                                         </>
@@ -1096,7 +1108,7 @@ const InstructionCreate = () => {
                                         onClick={() => removeStep(getValues(`patternInstruction.${i}`))}
                                     />
                                 </ButtonGrid>
-                            </Accordion>
+                            </StyledAccordion>
                         </Grid>
                     ))}
 
@@ -1105,7 +1117,7 @@ const InstructionCreate = () => {
                     </ButtonGrid>
                 </RowGrid>
             ) : null}
-        </Grid>
+        </MainContainer>
     );
 };
 export default InstructionCreate;
