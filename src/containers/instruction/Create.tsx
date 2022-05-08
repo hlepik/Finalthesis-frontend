@@ -56,6 +56,7 @@ export interface IInstructionForm {
     categoryId: string;
     patternFile: string | null;
     fileName: string;
+    dateAdded: Date | null;
     categoryName?: string;
     mainPictureName: string | null;
     mainPicture: string | null;
@@ -187,6 +188,7 @@ const InstructionCreate = () => {
             categoryId: "",
             fileName: "",
             patternFile: "",
+            dateAdded: null,
             categoryName: "",
             mainPicture: "",
             mainPictureName: null,
@@ -225,6 +227,7 @@ const InstructionCreate = () => {
 
     const [canLoad, setCanLoad] = useState(false);
 
+    console.log(getValues());
     const handleDropzoneClose = () => {
         setImageDialogState({ open: false, index: null });
     };
@@ -268,6 +271,8 @@ const InstructionCreate = () => {
                 setValue("fileName", result.data.fileName);
                 setValue("mainPicture", result.data.mainPicture);
                 setValue("mainPictureName", result.data.mainPictureName);
+                setValue("circleSkirtType", result.data.circleSkirtType);
+                setValue("dateAdded", result.data.dateAdded);
             }
         }
         setCanLoad(true);
@@ -549,11 +554,6 @@ const InstructionCreate = () => {
     };
 
     const handleUploadImagesDialogSubmit = async () => {
-        setValue(
-            `patternInstruction.${imageDialogState.index!}.pictureName`,
-            `patternInstruction.${imageDialogState.index!}.picture.fileName`
-        );
-
         if (getValues(`patternInstruction.${imageDialogState.index!}`).id !== null) {
             updatePatternInstruction(getValues(`patternInstruction.${imageDialogState.index!}`));
         }
@@ -823,10 +823,13 @@ const InstructionCreate = () => {
                                         type={"number"}
                                         InputProps={{ inputProps: { min: 1, step: 0.5 } }}
                                         label={"Avaruslisa suurus (cm)"}
-                                        value={value === undefined || value === null ? 0 : value}
+                                        value={value === undefined || value === null ? "" : value}
                                         variant="standard"
                                         onChange={(e) => {
-                                            setValue(`extraSizes.${i}.extra`, parseInt(e.target.value));
+                                            setValue(
+                                                `extraSizes.${i}.extra`,
+                                                e.target.value.length > 0 ? parseFloat(e.target.value) : 0
+                                            );
                                         }}
                                     />
                                 )}
@@ -962,7 +965,7 @@ const InstructionCreate = () => {
                                         watch(`patternInstruction.${i}.picture`) !== undefined ? (
                                             <ImageGrid>
                                                 <StyledImg
-                                                    src={getImageUrl(watch(`patternInstruction.${i}.pictureName`)!)}
+                                                    src={getImageUrl(watch(`patternInstruction.${i}.picture`)!)}
                                                 />
                                             </ImageGrid>
                                         ) : (

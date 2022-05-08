@@ -14,12 +14,14 @@ import FileSaver from "file-saver";
 import { COLOR_BLACK } from "../../utils/constants";
 import { IUserPattern } from "../../dto/IUserPattern";
 import { IBodyMeasurements } from "../../dto/IBodyMeasurements";
+import { map, round } from "lodash";
+import { IUnit } from "../../dto/IUnit";
 
 const ImageGrid = styled(Grid)(({ theme }) => ({
     height: "auto",
-    width: "700px",
+    width: "400px",
     [theme.breakpoints.down("lg")]: {
-        width: "400px",
+        width: "300px",
     },
     [theme.breakpoints.down("md")]: {
         width: "auto",
@@ -27,10 +29,32 @@ const ImageGrid = styled(Grid)(({ theme }) => ({
 }));
 const StepperImageGrid = styled(Grid)({
     height: "auto",
-    width: "550px",
+    width: "450px",
+});
+const StyledUserGrid = styled(Grid)({
+    border: "2rem solid rgba(247, 216, 123, 0.4)",
+    margin: "2rem",
+    padding: "1rem",
+});
+const ColumnGrid = styled(Grid)({
+    display: "flex",
+    flexDirection: "row",
+    columnGap: "1rem",
+    justifyContent: "center",
 });
 const StyledTitle = styled(Typography)({
-    marginBottom: "1rem",
+    fontWeight: 600,
+});
+const StyledTitle2 = styled(Typography)({
+    fontWeight: 600,
+    marginBottom: "2rem",
+});
+const BoldText = styled(Typography)({
+    fontWeight: 600,
+    marginBottom: "8px",
+});
+const MeasurementText = styled(Typography)({
+    marginBottom: 0,
 });
 const StyledImg = styled("img")({
     width: "100%",
@@ -38,7 +62,6 @@ const StyledImg = styled("img")({
 });
 const RowGrid = styled(Grid)(({ theme }) => ({
     display: "flex",
-    border: "1px solid green",
     flexDirection: "row",
     backgroundColor: "rgba(247, 216, 123, 0.4)",
     padding: "1rem",
@@ -98,6 +121,7 @@ const UserPatternDetail = () => {
     const [canRender, setCanRender] = useState(false);
     const [userStep, setUserStep] = useState<IUserPattern>({} as IUserPattern);
     const [hasStarted, setHasStarted] = useState(false);
+    const [unit, setUnit] = useState<IUnit>({} as IUnit);
 
     const [userMeasurements, setUserMeasurements] = useState<IBodyMeasurements>({} as IBodyMeasurements);
     const [hasCalculatedMeasurements, setHasCalculatedMeasurements] = useState(false);
@@ -122,6 +146,8 @@ const UserPatternDetail = () => {
             if (resultData.ok && resultData.data) {
                 setUserStep(resultData.data);
                 setHasStarted(true);
+            } else {
+                setHasStarted(false);
             }
         }
     }, [appState]);
@@ -195,7 +221,12 @@ const UserPatternDetail = () => {
     const calculateMeasurements = async () => {
         let userData = await BaseService.get<IBodyMeasurements>("/BodyMeasurements/pattern/" + id, appState.token!);
         if (userData.ok && userData.data) {
+            let unit = await BaseService.get<IUnit>("/Units/" + userData.data.unitId, appState.token!);
+            if (unit.ok && unit.data) {
+                setUnit(unit.data);
+            }
             setHasCalculatedMeasurements(true);
+            setUserMeasurements(userData.data);
         }
     };
 
@@ -206,7 +237,6 @@ const UserPatternDetail = () => {
     useEffect(() => {
         loadData();
     }, [loadData]);
-
     return (
         <Grid container className={"PageContainer"}>
             {canRender ? (
@@ -242,6 +272,81 @@ const UserPatternDetail = () => {
                                 Sama lõike puhul saab lasta programmil välja arvutada suurused vaid korra, seega veendu,
                                 et sisestatud kehamõõdud on korrektsed!
                             </StyledText>
+                            {hasCalculatedMeasurements ? (
+                                <>
+                                    <StyledUserGrid>
+                                        <StyledTitle2 variant={"h3"}>
+                                            Kasutaja mõõdud lõike suuruse valimisel
+                                        </StyledTitle2>
+
+                                        {userMeasurements.waistGirth > 0 && (
+                                            <ColumnGrid>
+                                                <BoldText variant={"h4"}>Vööümbermõõt:</BoldText>
+                                                <MeasurementText variant={"h4"}>
+                                                    {round(userMeasurements.waistGirth, 1)} {unit.shortName}
+                                                </MeasurementText>
+                                            </ColumnGrid>
+                                        )}
+                                        {userMeasurements.chestGirth > 0 && (
+                                            <ColumnGrid>
+                                                <BoldText variant={"h4"}>Rinnaümbermõõt:</BoldText>
+                                                <MeasurementText variant={"h4"}>
+                                                    {round(userMeasurements.chestGirth, 1)} {unit.shortName}
+                                                </MeasurementText>
+                                            </ColumnGrid>
+                                        )}
+                                        {userMeasurements.upperHipGirth > 0 && (
+                                            <ColumnGrid>
+                                                <BoldText variant={"h4"}>Ülemise puusa ümbermõõt:</BoldText>
+                                                <MeasurementText variant={"h4"}>
+                                                    {round(userMeasurements.upperHipGirth, 1)} {unit.shortName}
+                                                </MeasurementText>
+                                            </ColumnGrid>
+                                        )}
+                                        {userMeasurements.waistLengthFirst > 0 && (
+                                            <ColumnGrid>
+                                                <BoldText variant={"h4"}>Tuharavoldi pikkus:</BoldText>
+                                                <MeasurementText variant={"h4"}>
+                                                    {round(userMeasurements.waistLengthFirst, 1)} {unit.shortName}
+                                                </MeasurementText>
+                                            </ColumnGrid>
+                                        )}
+                                        {userMeasurements.hipGirth > 0 && (
+                                            <ColumnGrid>
+                                                <BoldText variant={"h4"}>Puusaümbermõõt:</BoldText>
+                                                <MeasurementText variant={"h4"}>
+                                                    {round(userMeasurements.hipGirth, 1)} {unit.shortName}
+                                                </MeasurementText>
+                                            </ColumnGrid>
+                                        )}
+                                        {userMeasurements.waistLengthSec > 0 && (
+                                            <ColumnGrid>
+                                                <BoldText variant={"h4"}>Vööjoone kõrgus:</BoldText>
+                                                <MeasurementText variant={"h4"}>
+                                                    {round(userMeasurements.waistLengthSec, 1)} {unit.shortName}
+                                                </MeasurementText>
+                                            </ColumnGrid>
+                                        )}
+
+                                        {userMeasurements.frontLength > 0 && (
+                                            <ColumnGrid>
+                                                <BoldText variant={"h4"}>Esipikkus:</BoldText>
+                                                <MeasurementText variant={"h4"}>
+                                                    {round(userMeasurements.frontLength, 1)} {unit.shortName}
+                                                </MeasurementText>
+                                            </ColumnGrid>
+                                        )}
+                                        {userMeasurements.inTake !== undefined && userMeasurements.inTake! > 0 && (
+                                            <ColumnGrid>
+                                                <BoldText variant={"h4"}>Sissevõtted:</BoldText>
+                                                <MeasurementText variant={"h4"}>
+                                                    {round(userMeasurements.inTake!, 0)} {unit.shortName}
+                                                </MeasurementText>
+                                            </ColumnGrid>
+                                        )}
+                                    </StyledUserGrid>
+                                </>
+                            ) : null}
                             <StyledButton>
                                 <BasicButton btnType={"black"} label={"Ava lõikefail"} onClick={saveFile} />
                                 <BasicButton
@@ -250,7 +355,6 @@ const UserPatternDetail = () => {
                                     onClick={calculateMeasurements}
                                 />
                             </StyledButton>
-                            {hasCalculatedMeasurements ? <Grid>siia tulevad mõõdud</Grid> : null}
                         </StyledGrid>
                     ) : (
                         <RowGrid>
