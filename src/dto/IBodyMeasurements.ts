@@ -25,6 +25,7 @@ export interface IBodyMeasurements {
     buttockHeight: number;
     length: number;
     inTake?: number;
+    armHoleWidth?: number;
     unitId: string;
     appUserId: string;
     instructionId?: string;

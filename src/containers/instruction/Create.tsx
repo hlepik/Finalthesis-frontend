@@ -184,7 +184,12 @@ const InstructionCreate = () => {
             name: "",
             description: "",
             totalStep: 0,
-            patternInstruction: null,
+            patternInstruction: [
+                {
+                    title: "",
+                    description: "",
+                },
+            ],
             categoryId: "",
             fileName: "",
             patternFile: "",
@@ -227,7 +232,6 @@ const InstructionCreate = () => {
 
     const [canLoad, setCanLoad] = useState(false);
 
-    console.log(getValues());
     const handleDropzoneClose = () => {
         setImageDialogState({ open: false, index: null });
     };
@@ -286,12 +290,18 @@ const InstructionCreate = () => {
         setValue("patternFile", e.target.files[0]);
         const url = "/Instructions/file/" + getValues("id");
 
-        if (id !== null) {
+        if (id !== undefined) {
             let response = await FormDataService.edit(url, objToFormData(getValues()), appState.token!);
             if (response.statusCode >= 200 && response.statusCode < 400) {
                 setMessage({
                     type: EAlertClass.Success,
                     message: "Faili muutmine õnnestus!",
+                });
+
+                scrollTo({
+                    top: 0,
+                    left: 0,
+                    behavior: "smooth",
                 });
                 const responseValue = response.data as unknown as IInstruction;
                 setValue("fileName", responseValue.fileName);
@@ -300,9 +310,14 @@ const InstructionCreate = () => {
                     type: EAlertClass.Danger,
                     message: "Faili muutmine ei õnnestunud!",
                 });
+
+                scrollTo({
+                    top: 0,
+                    left: 0,
+                    behavior: "smooth",
+                });
             }
         }
-        scrollTo(0, 0);
     };
 
     const saveImage = (e: any) => {
@@ -314,13 +329,14 @@ const InstructionCreate = () => {
         setValue("mainPicture", e.target.files[0]);
         const url = "/Instructions/picture/" + getValues("id");
 
-        if (id !== null) {
+        if (id !== undefined) {
             let response = await FormDataService.edit(url, objToFormData(getValues()), appState.token!);
             if (response.statusCode >= 200 && response.statusCode < 400) {
                 setMessage({
                     type: EAlertClass.Success,
                     message: "Pildi muutmine õnnestus!",
                 });
+
                 const responseValue = response.data as unknown as IInstruction;
                 setValue("mainPictureName", responseValue.mainPictureName);
             } else {
@@ -330,7 +346,12 @@ const InstructionCreate = () => {
                 });
             }
         }
-        scrollTo(0, 0);
+
+        scrollTo({
+            top: 0,
+            left: 0,
+            behavior: "smooth",
+        });
     };
 
     const handleChange = (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
@@ -347,33 +368,48 @@ const InstructionCreate = () => {
         setValue("patternInstruction", oldList);
     };
     const removeStep = async (patternInstruction: IPatternInstruction) => {
-        if (step !== 0) {
+        if (getValues("patternInstruction")!.length > 1) {
             setStep(step - 1);
-        }
-        if (patternInstruction.id !== null) {
-            let result = await BaseService.delete<IPatternInstruction>(
-                "/PatternInstructions/" + patternInstruction.id,
-                appState.token!
-            );
-            if (result.ok) {
-                const newList = getValues("patternInstruction")!.filter((item) => item.id !== patternInstruction.id);
+            if (patternInstruction.id !== undefined) {
+                let result = await BaseService.delete<IPatternInstruction>(
+                    "/PatternInstructions/" + patternInstruction.id,
+                    appState.token!
+                );
+                if (result.ok) {
+                    const newList = getValues("patternInstruction")!.filter(
+                        (item) => item.id !== patternInstruction.id
+                    );
+                    setValue("patternInstruction", newList);
+                }
+            } else {
+                const oldList = getValues("patternInstruction");
+                const newList = oldList!.filter(
+                    (x) => x.title !== patternInstruction.title && x.description !== patternInstruction.description
+                );
                 setValue("patternInstruction", newList);
             }
         } else {
-            const oldList = getValues("patternInstruction");
+            setMessage({
+                message: `Vähemalt 1 samm on kohustuslik.`,
+                type: EAlertClass.Danger,
+            });
+            scrollTo({
+                top: 0,
+                left: 0,
+                behavior: "smooth",
+            });
         }
     };
 
     const insertPatternInstruction = async (data: IPatternInstruction) => {
         const url = "/PatternInstructions";
-        console.log(data);
         let response = await FormDataService.post(url, objToFormData(data), appState.token!);
 
         if (response.statusCode >= 200 && response.statusCode < 400) {
             return;
         }
     };
-    console.log(getValues());
+
     const insertExtraSizes = async (data: IExtraSize) => {
         const url = "/ExtraSizes";
         let response = await BaseService.post(url, data, appState.token!);
@@ -442,6 +478,11 @@ const InstructionCreate = () => {
                         message: `Samm ${count + 1} pealkirja sisestamine on kohustuslik!`,
                         type: EAlertClass.Danger,
                     });
+                    scrollTo({
+                        top: 0,
+                        left: 0,
+                        behavior: "smooth",
+                    });
                     return false;
                 }
                 if (item.description === null || isBlank(item.description)) {
@@ -453,7 +494,11 @@ const InstructionCreate = () => {
                         message: `Samm ${count + 1} juhendi sisestamine on kohustuslik!`,
                         type: EAlertClass.Danger,
                     });
-
+                    scrollTo({
+                        top: 0,
+                        left: 0,
+                        behavior: "smooth",
+                    });
                     return false;
                 }
                 count = count + 1;
@@ -486,11 +531,8 @@ const InstructionCreate = () => {
 
             if (response.statusCode >= 200 && response.statusCode < 400) {
                 for (const each of getValues("patternInstruction")!) {
-                    each.picture = each.pictureName;
-
                     if (each.id === undefined) {
                         each.instructionId = getValues("id") as string;
-                        each.picture = each.pictureName;
                         await insertPatternInstruction(each);
                     } else {
                         await updatePatternInstruction(each);
@@ -510,28 +552,40 @@ const InstructionCreate = () => {
                             type: EAlertClass.Danger,
                             message: "Vajamineva mõõtühiku uuendamine ebaõnnestus",
                         });
-                    }
 
-                    scrollTo(0, 0);
+                        scrollTo({
+                            top: 0,
+                            left: 0,
+                            behavior: "smooth",
+                        });
+                    }
                 }
             }
         }
     };
 
     const updatePatternInstruction = async (patternInstruction: IPatternInstruction) => {
-        let response = await FormDataService.edit(
-            "/PatternInstructions/" + patternInstruction.id,
-            objToFormData(patternInstruction),
-            appState.token!
-        );
-        if (response.statusCode >= 200 && response.statusCode < 400) {
-            const responseValue = response.data as unknown as IPatternInstruction;
-            setValue(`patternInstruction.${imageDialogState.index!}`, responseValue);
-        } else {
-            setMessage({
-                type: EAlertClass.Danger,
-                message: "Lõike sammu uuendamine ebaõnnestus",
-            });
+        if (patternInstruction.id !== undefined) {
+            let response = await FormDataService.edit(
+                "/PatternInstructions/" + patternInstruction.id,
+                objToFormData(patternInstruction),
+                appState.token!
+            );
+            if (response.statusCode >= 200 && response.statusCode < 400) {
+                const responseValue = response.data as unknown as IPatternInstruction;
+                setValue(`patternInstruction.${imageDialogState.index!}`, responseValue);
+            } else {
+                setMessage({
+                    type: EAlertClass.Danger,
+                    message: "Lõike sammu uuendamine ebaõnnestus",
+                });
+
+                scrollTo({
+                    top: 0,
+                    left: 0,
+                    behavior: "smooth",
+                });
+            }
         }
     };
     const handleStepImageDelete = async (patternInstruction: IPatternInstruction, index: number) => {
@@ -554,7 +608,7 @@ const InstructionCreate = () => {
     };
 
     const handleUploadImagesDialogSubmit = async () => {
-        if (getValues(`patternInstruction.${imageDialogState.index!}`).id !== null) {
+        if (getValues(`patternInstruction.${imageDialogState.index!}`).id !== undefined) {
             updatePatternInstruction(getValues(`patternInstruction.${imageDialogState.index!}`));
         }
         handlePictureDialogClose();
@@ -611,11 +665,12 @@ const InstructionCreate = () => {
     useEffect(() => {
         loadData();
     }, [loadData]);
+
+    console.log(getValues());
     return (
         <MainContainer>
             {canLoad ? (
                 <RowGrid>
-                    <Typography variant={"h3"}>Uue lõike sisestamine</Typography>
                     {message.message !== "" ? (
                         <AlertComponent message={message.message} show={true} type={message.type} paddingSide={false} />
                     ) : null}
@@ -627,6 +682,8 @@ const InstructionCreate = () => {
                             paddingSide={false}
                         />
                     ) : null}
+                    <Typography variant={"h3"}>Uue lõike sisestamine</Typography>
+
                     <DialogScreen handleClose={handleClose} isOpened={modalState.open}>
                         <Grid className={"formGrid"}>
                             <AlertComponent
@@ -960,7 +1017,7 @@ const InstructionCreate = () => {
                                                 required: "Pealkirja sisestamine on kohustuslik.",
                                             }}
                                         />
-                                        {id === undefined &&
+                                        {watch(`patternInstruction.${i}`).id === undefined &&
                                         watch(`patternInstruction.${i}.picture`) !== null &&
                                         watch(`patternInstruction.${i}.picture`) !== undefined ? (
                                             <ImageGrid>

@@ -1,6 +1,5 @@
 import { useCallback, useContext, useEffect, useState } from "react";
 import { AppContext } from "../context/AppContext";
-import UserPage from "./user/UserPage";
 import { Grid, styled, Typography } from "@mui/material";
 import PatternCard from "../components/PatternCard";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -100,13 +99,12 @@ const HomePage = () => {
                         <img src={"/images/imagee.png"} />
                     </ImageGrid>
                     <TextGrid>
-                        <Typography variant={"h4"}>Kuidas võtta endalt mõõte?</Typography>
+                        <Typography variant={"h4"}>Uudise pealkiri</Typography>
                         <Typography variant={"body2"}>
-                            Mõõtude võtmine on väga oluline ja seda tuleb teha võimalikult täpselt, et hiljem vältida
-                            vigu
+                            Siia on plaan lisada uudiseid, mis on seotud õmblemisega. Näiteks informatsioon kuidas
+                            mingeid protsesse läbida või kuidas töödelda erinevaid kangaid. Samuti uudised erinevate
+                            firmade kohta. Miks mitte ka mõned kasutajalood.
                         </Typography>
-
-                        <BasicButton btnType={"black"} label={"Loe edasi"} />
                     </TextGrid>
                 </StyledGrid>
             </Grid>

@@ -16,6 +16,8 @@ import { IUserPattern } from "../../dto/IUserPattern";
 import { IBodyMeasurements } from "../../dto/IBodyMeasurements";
 import { map, round } from "lodash";
 import { IUnit } from "../../dto/IUnit";
+import AlertComponent, { EAlertClass } from "../../components/AlertComponent";
+import { Link } from "react-router-dom";
 
 const ImageGrid = styled(Grid)(({ theme }) => ({
     height: "auto",
@@ -122,6 +124,7 @@ const UserPatternDetail = () => {
     const [userStep, setUserStep] = useState<IUserPattern>({} as IUserPattern);
     const [hasStarted, setHasStarted] = useState(false);
     const [unit, setUnit] = useState<IUnit>({} as IUnit);
+    const [alertMessage, setAlertMessage] = useState("");
 
     const [userMeasurements, setUserMeasurements] = useState<IBodyMeasurements>({} as IBodyMeasurements);
     const [hasCalculatedMeasurements, setHasCalculatedMeasurements] = useState(false);
@@ -169,14 +172,7 @@ const UserPatternDetail = () => {
             newUserData.instructionId = id;
         }
         setUserStep(newUserData);
-
-        console.log(userStep);
-        let response = await BaseService.post<IUserPattern>("/UserPatterns", userStep, appState.token!);
-        if (response.ok && response.data) {
-            console.log("õnnestus");
-        } else {
-            console.log("ebaõnnestus");
-        }
+        await BaseService.post<IUserPattern>("/UserPatterns", userStep, appState.token!);
     };
 
     const updateUserData = async (hasFinished: boolean) => {
@@ -184,14 +180,7 @@ const UserPatternDetail = () => {
         newUserData.stepCount = activeStep;
         newUserData.hasDone = hasFinished;
         setUserStep(newUserData);
-
-        console.log(userStep);
-        let response = await BaseService.edit<IUserPattern>("/UserPatterns/" + userStep.id, userStep, appState.token!);
-        if (response.statusCode >= 200 && response.statusCode < 400) {
-            console.log("õnnestus");
-        } else {
-            console.log("ebaõnnestus1");
-        }
+        await BaseService.edit<IUserPattern>("/UserPatterns/" + userStep.id, userStep, appState.token!);
     };
 
     const handleDialogScreen = () => {
@@ -227,6 +216,10 @@ const UserPatternDetail = () => {
             }
             setHasCalculatedMeasurements(true);
             setUserMeasurements(userData.data);
+        } else {
+            setAlertMessage(
+                "Teie kehamõõtmeid ei leitud. Lisage kehamõõdud või jätkake juhendiga ilma välja arvutatud suurustega!"
+            );
         }
     };
 
@@ -272,6 +265,17 @@ const UserPatternDetail = () => {
                                 Sama lõike puhul saab lasta programmil välja arvutada suurused vaid korra, seega veendu,
                                 et sisestatud kehamõõdud on korrektsed!
                             </StyledText>
+                            {alertMessage !== "" && (
+                                <>
+                                    <AlertComponent
+                                        show={alertMessage !== ""}
+                                        message={alertMessage}
+                                        type={EAlertClass.Danger}
+                                        paddingSide={false}
+                                    />
+                                    <Link to={"/andmed"}>Sisesta kehamõõdud</Link>
+                                </>
+                            )}
                             {hasCalculatedMeasurements ? (
                                 <>
                                     <StyledUserGrid>
@@ -336,6 +340,47 @@ const UserPatternDetail = () => {
                                                 </MeasurementText>
                                             </ColumnGrid>
                                         )}
+                                        {userMeasurements.chestHeight > 0 && (
+                                            <ColumnGrid>
+                                                <BoldText variant={"h4"}>Rinnakõrgus:</BoldText>
+                                                <MeasurementText variant={"h4"}>
+                                                    {round(userMeasurements.chestHeight!, 0)} {unit.shortName}
+                                                </MeasurementText>
+                                            </ColumnGrid>
+                                        )}
+                                        {userMeasurements.backLength > 0 && (
+                                            <ColumnGrid>
+                                                <BoldText variant={"h4"}>Seljapikkus:</BoldText>
+                                                <MeasurementText variant={"h4"}>
+                                                    {round(userMeasurements.backLength!, 0)} {unit.shortName}
+                                                </MeasurementText>
+                                            </ColumnGrid>
+                                        )}
+                                        {userMeasurements.backWidth > 0 && (
+                                            <ColumnGrid>
+                                                <BoldText variant={"h4"}>Seljalaius:</BoldText>
+                                                <MeasurementText variant={"h4"}>
+                                                    {round(userMeasurements.backWidth!, 0)} {unit.shortName}
+                                                </MeasurementText>
+                                            </ColumnGrid>
+                                        )}
+                                        {userMeasurements.armholeLength > 0 && (
+                                            <ColumnGrid>
+                                                <BoldText variant={"h4"}>Käeaugukaare sügavus:</BoldText>
+                                                <MeasurementText variant={"h4"}>
+                                                    {round(userMeasurements.armholeLength!, 0)} {unit.shortName}
+                                                </MeasurementText>
+                                            </ColumnGrid>
+                                        )}
+                                        {userMeasurements.armHoleWidth !== undefined &&
+                                            userMeasurements.armHoleWidth > 0 && (
+                                                <ColumnGrid>
+                                                    <BoldText variant={"h4"}>Käeaugukaare laius:</BoldText>
+                                                    <MeasurementText variant={"h4"}>
+                                                        {round(userMeasurements.armHoleWidth!, 0)} {unit.shortName}
+                                                    </MeasurementText>
+                                                </ColumnGrid>
+                                            )}
                                         {userMeasurements.inTake !== undefined && userMeasurements.inTake! > 0 && (
                                             <ColumnGrid>
                                                 <BoldText variant={"h4"}>Sissevõtted:</BoldText>
@@ -358,13 +403,15 @@ const UserPatternDetail = () => {
                         </StyledGrid>
                     ) : (
                         <RowGrid>
-                            <StepperImageGrid>
-                                <StyledImg
-                                    src={`${PicturePath}${
-                                        instructionPattern.patternInstructions[activeStep - 1].pictureName
-                                    }`}
-                                />
-                            </StepperImageGrid>
+                            {instructionPattern.patternInstructions[activeStep - 1].pictureName !== null && (
+                                <StepperImageGrid>
+                                    <StyledImg
+                                        src={`${PicturePath}${
+                                            instructionPattern.patternInstructions[activeStep - 1].pictureName
+                                        }`}
+                                    />
+                                </StepperImageGrid>
+                            )}
                             <TextGrid>
                                 <StyledTitle variant={"h5"}>
                                     {instructionPattern.patternInstructions[activeStep - 1].title}
@@ -394,7 +441,7 @@ const UserPatternDetail = () => {
                                     <BasicButton
                                         btnType={"transparent"}
                                         iconType={activeStep !== instructionPattern.totalStep ? "next" : undefined}
-                                        label={activeStep === instructionPattern.totalStep ? "Sulge" : "Edasi"}
+                                        label={activeStep === instructionPattern.totalStep ? "Lõpeta" : "Edasi"}
                                         onClick={
                                             activeStep === instructionPattern.totalStep
                                                 ? handleDialogScreen

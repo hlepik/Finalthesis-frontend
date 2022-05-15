@@ -400,7 +400,7 @@ const UserPage = () => {
                                     <Typography variant={"body1"}>Jala ümbermõõt:</Typography>
                                     <Typography variant={"body1"}>Jala sisemise külje pikkus:</Typography>
                                     <Typography variant={"body1"}>Käe pikkus:</Typography>
-                                    <Typography variant={"body1"}>Õla pikkus:</Typography>
+                                    <Typography variant={"body1"}>Õlapikkus:</Typography>
                                     <Typography variant={"body1"}>Käeaugukaare sügavus:</Typography>
                                     <Typography variant={"body1"}>Selja laius:</Typography>
                                     <Typography variant={"body1"}>Puusa kõrgus:</Typography>

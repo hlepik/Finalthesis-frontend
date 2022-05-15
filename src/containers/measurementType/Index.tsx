@@ -52,7 +52,6 @@ const MeasurementTypeIndex = () => {
         let result = await BaseService.getAll<IMeasurementType>("/MeasurementTypes", appState.token!);
 
         if (result.ok && result.data) {
-            console.log(result.data);
             setMeasurementType(result.data);
         }
     }, [appState]);
@@ -120,7 +119,6 @@ const MeasurementTypeIndex = () => {
             }
         }
         if (dialogType === EDialogType.Create) {
-            console.log(getValues());
             let response = await BaseService.post(url, getValues(), appState.token!);
 
             if (response.statusCode >= 200 && response.statusCode < 400) {
@@ -130,8 +128,7 @@ const MeasurementTypeIndex = () => {
             }
         }
     };
-    console.log("easurementType");
-    console.log(measurementType);
+
     useEffect(() => {
         loadData();
     }, [loadData]);
